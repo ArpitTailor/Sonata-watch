@@ -1,0 +1,63 @@
+<!-- ================= index.html ================= -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sonata Watches</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="glass">
+  <h1 class="logo">Sonata</h1>
+  <nav>
+    <a href="#home">Home</a>
+    <a href="#products">Products</a>
+    <a href="#cart">Cart (<span id="cart-count">0</span>)</a>
+  </nav>
+</header>
+
+<section class="slider" id="home">
+  <div class="slides">
+    <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30" class="active">
+    <img src="https://images.unsplash.com/photo-1518546305927-5a555bb7020d">
+    <img src="https://images.unsplash.com/photo-1516574187841-cb9cc2ca948b">
+  </div>
+  <div class="overlay"></div>
+  <h2 class="slider-text">Luxury in Every Second</h2>
+</section>
+
+<section id="products" class="products">
+  <div class="card glass">
+    <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30">
+    <h3>Classic Watch</h3>
+    <p>₹1999</p>
+    <button onclick="addToCart('Classic Watch',1999)">Add to Cart</button>
+  </div>
+
+  <div class="card glass">
+    <img src="https://images.unsplash.com/photo-1518546305927-5a555bb7020d">
+    <h3>Luxury Watch</h3>
+    <p>₹2999</p>
+    <button onclick="addToCart('Luxury Watch',2999)">Add to Cart</button>
+  </div>
+
+  <div class="card glass">
+    <img src="https://images.unsplash.com/photo-1516574187841-cb9cc2ca948b">
+    <h3>Smart Watch</h3>
+    <p>₹3999</p>
+    <button onclick="addToCart('Smart Watch',3999)">Add to Cart</button>
+  </div>
+</section>
+
+<section id="cart" class="cart glass">
+  <h2>Your Cart</h2>
+  <ul id="cart-items"></ul>
+  <h3>Total: ₹<span id="total">0</span></h3>
+</section>
+
+<script src="script.js"></script>
+</body>
+</html>
+

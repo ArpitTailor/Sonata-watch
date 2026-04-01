@@ -1,36 +1,25 @@
-// ================= script.js =================
-let cart = [];
+let API = "http://localhost:5000/api/products";
+let cartCount = 0;
 
-function addToCart(name, price) {
-  cart.push({ name, price });
-  updateCart();
+// Load Products
+fetch(API)
+.then(res => res.json())
+.then(data => {
+    let container = document.getElementById("products");
+
+    data.forEach(p => {
+        container.innerHTML += `
+        <div class="card">
+            <img src="${p.image}">
+            <h4>${p.name}</h4>
+            <p>₹${p.price}</p>
+            <button onclick="addCart()">Add to Cart</button>
+        </div>`;
+    });
+});
+
+// Cart
+function addCart() {
+    cartCount++;
+    document.getElementById("cart-count").innerText = cartCount + " 🛒";
 }
-
-function updateCart() {
-  const list = document.getElementById("cart-items");
-  const count = document.getElementById("cart-count");
-  const total = document.getElementById("total");
-
-  list.innerHTML = "";
-  let sum = 0;
-
-  cart.forEach(item => {
-    const li = document.createElement("li");
-    li.textContent = `${item.name} - ₹${item.price}`;
-    list.appendChild(li);
-    sum += item.price;
-  });
-
-  count.textContent = cart.length;
-  total.textContent = sum;
-}
-
-// Slider animation
-let slides = document.querySelectorAll(".slides img");
-let index = 0;
-
-setInterval(() => {
-  slides[index].classList.remove("active");
-  index = (index + 1) % slides.length;
-  slides[index].classList.add("active");
-}, 3000);

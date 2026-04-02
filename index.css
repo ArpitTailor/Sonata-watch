@@ -1,0 +1,79 @@
+body {
+    background-color: rgb(231, 231, 231);
+}
+
+.Top {
+    background-color: black;
+    text-align: center;
+    width: 80%;
+    margin-left: 10%;
+    border: 10px solid rgb(255, 255, 255);
+    border-radius: 100px;
+}
+
+h1 {
+    color: silver;
+    font-size: 125px;
+}
+
+.Top img {
+    width: 60%;
+    height: 500px;
+    border: 2px silver solid;
+    border-radius: 50px;
+}
+
+h2 {
+    font-size: 40px;
+    text-align: center;
+}
+
+.Sub {
+    transition: all 0.5s ease-in-out;
+    background-color: black;
+    width: 350px;
+    text-align: center;
+    border-radius: 20px;
+}
+
+.Sub img {
+    width: 300px;
+    height: 200px;
+    border: 2px silver solid;
+    border-radius: 20px;
+}
+
+.Sub button {
+    transition: all 0.5s ease-in-out;
+    width: 300px;
+    height: 45px;
+    background-color: silver;
+    color: black;
+    font-size: large;
+    font-weight: bold;
+    border: 2px rgb(255, 255, 255) solid;
+    border-radius: 20px;
+}
+
+.Main {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.Main:hover .Sub {
+    transform: scale(0.8);
+}
+
+.Main .Sub:hover {
+    transform: translateY(-30px) scale(0.9);
+}
+
+.Sub:hover button {
+    background-color: dodgerblue;
+    color: white;
+}
+
+h6 {
+    text-align: center;
+    font-size: 40px;
+}

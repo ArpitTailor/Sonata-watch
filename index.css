@@ -119,3 +119,10 @@ h6 {
     color: white;
     border-color: white;
 }
+
+.user-greeting {
+    font-size: 18px;
+    color: #333;
+    margin-right: 15px;
+    font-weight: 500;
+}

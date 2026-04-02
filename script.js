@@ -5,8 +5,14 @@ let isLoggedIn = false;
 // Authentication Logic
 function updateAuthButton() {
     const authBtn = document.getElementById('auth-btn');
+    const userGreeting = document.getElementById('user-greeting');
+
     if (authBtn) {
         authBtn.innerText = isLoggedIn ? "Logout" : "Login";
+    }
+
+    if (userGreeting) {
+        userGreeting.innerText = isLoggedIn ? "Welcome back, User!" : "";
     }
 }
 

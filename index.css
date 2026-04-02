@@ -310,3 +310,18 @@ h6 {
 .submit-btn.loading .spinner, .social-btn.loading .spinner {
     display: block;
 }
+
+.forgot-password {
+    display: block;
+    text-align: right;
+    font-size: 13px;
+    color: #666;
+    text-decoration: none;
+    margin-top: -10px;
+    margin-bottom: 20px;
+}
+
+.forgot-password:hover {
+    color: dodgerblue;
+    text-decoration: underline;
+}

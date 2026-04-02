@@ -61,6 +61,14 @@ function handleLoginSubmit(event) {
     }, 1500);
 }
 
+function handleForgotPassword(event) {
+    event.preventDefault();
+    const identifier = prompt("Enter your email or username to reset your password:");
+    if (identifier) {
+        alert(`A password reset link has been sent to ${identifier}. (Simulation complete)`);
+    }
+}
+
 function handleSocialLogin(event) {
     const btn = event.currentTarget;
     const provider = btn.classList.contains('google-btn') ? 'Google' : 'Gmail';
@@ -241,6 +249,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const loginForm = document.getElementById('login-form');
     if (loginForm) {
         loginForm.addEventListener('submit', handleLoginSubmit);
+    }
+
+    const forgotPw = document.getElementById('forgot-password');
+    if (forgotPw) {
+        forgotPw.addEventListener('click', handleForgotPassword);
     }
 
     // Handle Social Login Buttons

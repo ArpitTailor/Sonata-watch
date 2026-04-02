@@ -13,9 +13,17 @@ function updateAuthButton() {
     }
 
     if (userGreeting) {
-        const nameInput = document.getElementById('username');
-        const userName = (isLoggedIn && socialUserName) ? socialUserName : ((isLoggedIn && nameInput && nameInput.value) ? nameInput.value : "User");
-        userGreeting.innerText = isLoggedIn ? `Welcome back, ${userName}!` : "";
+        if (isLoggedIn) {
+            const nameInput = document.getElementById('username');
+            const userName = socialUserName ? socialUserName : ((nameInput && nameInput.value) ? nameInput.value : "User");
+            userGreeting.innerText = `Welcome back, ${userName}!`;
+            setTimeout(() => userGreeting.classList.add('visible'), 10);
+        } else {
+            userGreeting.classList.remove('visible');
+            setTimeout(() => {
+                if (!isLoggedIn) userGreeting.innerText = "";
+            }, 500);
+        }
     }
 }
 

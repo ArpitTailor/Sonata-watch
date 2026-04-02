@@ -303,10 +303,10 @@ h6 {
     to { transform: rotate(360deg); }
 }
 
-.submit-btn.loading .btn-text {
+.submit-btn.loading .btn-text, .social-btn.loading .btn-text {
     display: none;
 }
 
-.submit-btn.loading .spinner {
+.submit-btn.loading .spinner, .social-btn.loading .spinner {
     display: block;
 }

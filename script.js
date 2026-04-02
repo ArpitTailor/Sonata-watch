@@ -3,6 +3,7 @@ let cartCount = 0;
 let isLoggedIn = false;
 
 // Authentication Logic
+let socialUserName = "";
 function updateAuthButton() {
     const authBtn = document.getElementById('auth-btn');
     const userGreeting = document.getElementById('user-greeting');
@@ -13,7 +14,7 @@ function updateAuthButton() {
 
     if (userGreeting) {
         const nameInput = document.getElementById('username');
-        const userName = (isLoggedIn && nameInput && nameInput.value) ? nameInput.value : "User";
+        const userName = (isLoggedIn && socialUserName) ? socialUserName : ((isLoggedIn && nameInput && nameInput.value) ? nameInput.value : "User");
         userGreeting.innerText = isLoggedIn ? `Welcome back, ${userName}!` : "";
     }
 }
@@ -21,6 +22,7 @@ function updateAuthButton() {
 function handleAuth() {
     if (isLoggedIn) {
         isLoggedIn = false;
+        socialUserName = "";
         updateAuthButton();
         console.log("User logged out");
     } else {
@@ -56,6 +58,35 @@ function handleLoginSubmit(event) {
             submitBtn.disabled = false;
         }
         console.log("User logged in");
+    }, 1500);
+}
+
+function handleSocialLogin(event) {
+    const btn = event.currentTarget;
+    const provider = btn.classList.contains('google-btn') ? 'Google' : 'Gmail';
+    
+    if (btn) {
+        btn.classList.add('loading');
+        btn.disabled = true;
+    }
+
+    // Disable other social buttons during loading
+    document.querySelectorAll('.social-btn').forEach(b => { if(b !== btn) b.disabled = true; });
+
+    setTimeout(() => {
+        isLoggedIn = true;
+        socialUserName = `${provider} User`; // Simulate getting name from social provider
+        updateAuthButton();
+        closeLoginModal();
+        
+        if (btn) {
+            btn.classList.remove('loading');
+            btn.disabled = false;
+        }
+        // Re-enable all social buttons
+        document.querySelectorAll('.social-btn').forEach(b => b.disabled = false);
+        
+        console.log(`User logged in via ${provider}`);
     }, 1500);
 }
 
@@ -211,6 +242,11 @@ document.addEventListener('DOMContentLoaded', () => {
     if (loginForm) {
         loginForm.addEventListener('submit', handleLoginSubmit);
     }
+
+    // Handle Social Login Buttons
+    document.querySelectorAll('.social-btn').forEach(btn => {
+        btn.addEventListener('click', handleSocialLogin);
+    });
 
     setupPasswordToggle(); // Initialize password toggle
 

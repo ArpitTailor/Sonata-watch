@@ -214,3 +214,24 @@ h6 {
     background-color: dodgerblue;
     color: white;
 }
+
+/* Password Toggle Styles */
+.password-input-container {
+    position: relative;
+    width: 100%;
+}
+
+.password-input-container input {
+    padding-right: 40px; /* Make space for the toggle icon */
+}
+
+.password-toggle {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #888;
+    font-size: 1.2em;
+    user-select: none; /* Prevent text selection */
+}

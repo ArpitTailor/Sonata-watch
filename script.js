@@ -44,6 +44,21 @@ function handleLoginSubmit(event) {
     console.log("User logged in");
 }
 
+// Password Toggle Logic
+function setupPasswordToggle() {
+    const passwordInput = document.getElementById('password');
+    const passwordToggle = document.getElementById('password-toggle');
+
+    if (passwordInput && passwordToggle) {
+        passwordToggle.addEventListener('click', () => {
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+            // Change icon based on visibility
+            passwordToggle.innerText = type === 'password' ? '👁️' : '🔒';
+        });
+    }
+}
+
 // Scroll Reveal Logic
 function handleScrollReveal() {
     const observer = new IntersectionObserver((entries) => {
@@ -181,6 +196,8 @@ document.addEventListener('DOMContentLoaded', () => {
     if (loginForm) {
         loginForm.addEventListener('submit', handleLoginSubmit);
     }
+
+    setupPasswordToggle(); // Initialize password toggle
 
     // Also handle static buttons in the HTML that aren't loaded via API
     document.querySelectorAll('.Sub button').forEach(button => {

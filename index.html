@@ -172,6 +172,26 @@ small gift from Bharani
                </div>
            </div>
        </div>
+
+       <!-- Recovery Modal -->
+       <div id="recovery-modal" class="modal-overlay">
+           <div class="modal-content">
+               <span class="close-btn" onclick="closeRecoveryModal()">&times;</span>
+               <h2>Reset Password</h2>
+               <p style="color: #666; margin-bottom: 20px; font-size: 14px;">Enter your email address and we'll send you a link to reset your password.</p>
+               <form id="recovery-form">
+                   <div class="input-group">
+                       <label for="recovery-email">Email Address</label>
+                       <input type="email" id="recovery-email" required placeholder="Enter your email">
+                   </div>
+                   <button type="submit" class="submit-btn">
+                       <span class="btn-text">Send Reset Link</span>
+                       <div class="spinner"></div>
+                   </button>
+               </form>
+           </div>
+       </div>
+
        <script src="script.js"></script>
     </body>
     

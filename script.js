@@ -1,6 +1,21 @@
 let API = "http://localhost:5000/api/products";
 let cartCount = 0;
 
+// Scroll Reveal Logic
+function handleScrollReveal() {
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('active');
+            }
+        });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.reveal').forEach(el => {
+        observer.observe(el);
+    });
+}
+
 // Function to update cart display
 function updateCartDisplay() {
     const cartCountElement = document.getElementById("cart-count");
@@ -39,7 +54,7 @@ async function loadProducts() {
             // Using template literals and proper event listener assignment
             // It's generally better to use addEventListener instead of onclick in HTML
             const productCard = document.createElement('div');
-            productCard.classList.add('card', 'Sub'); // Assuming 'Sub' is the styling for individual product cards
+            productCard.classList.add('card', 'Sub', 'reveal'); // Added reveal class
             productCard.innerHTML = `
                 <br>
                 <img src="${p.image}" alt="${p.name}">
@@ -56,6 +71,9 @@ async function loadProducts() {
             button.addEventListener('click', (event) => addCart(event.target.dataset.productName));
         });
 
+        // Re-run scroll reveal for dynamic elements
+        handleScrollReveal();
+
     } catch (error) {
         console.error("Error loading products:", error);
         // Optionally display an error message to the user
@@ -67,4 +85,5 @@ async function loadProducts() {
 document.addEventListener('DOMContentLoaded', () => {
     updateCartDisplay(); // Set initial cart count
     loadProducts(); // Fetch and display products
+    handleScrollReveal(); // Initialize animations
 });

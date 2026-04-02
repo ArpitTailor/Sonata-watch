@@ -69,41 +69,100 @@ function handleLoginSubmit(event) {
     }, 1500);
 }
 
+function showSocialInputForm(provider) {
+    const googleOption = document.getElementById('google-option');
+    const gmailOption = document.getElementById('gmail-option');
+    const socialDivider = document.querySelector('.social-divider');
+
+    const initialGoogleBtn = googleOption.querySelector('.google-btn-initial');
+    const googleInputForm = googleOption.querySelector('.social-input-form');
+
+    const initialGmailBtn = gmailOption.querySelector('.gmail-btn-initial');
+    const gmailInputForm = gmailOption.querySelector('.social-input-form');
+
+    if (provider === 'Google') {
+        initialGoogleBtn.classList.add('hidden');
+        googleInputForm.classList.add('visible');
+        gmailOption.classList.add('hidden'); // Hide Gmail option completely
+    } else if (provider === 'Gmail') {
+        initialGmailBtn.classList.add('hidden');
+        gmailInputForm.classList.add('visible');
+        googleOption.classList.add('hidden'); // Hide Google option completely
+    }
+    socialDivider.classList.add('hidden'); // Hide the OR divider
+}
+
+function hideSocialInputForm(provider) {
+    const googleOption = document.getElementById('google-option');
+    const gmailOption = document.getElementById('gmail-option');
+    const socialDivider = document.querySelector('.social-divider');
+
+    const initialGoogleBtn = googleOption.querySelector('.google-btn-initial');
+    const googleInputForm = googleOption.querySelector('.social-input-form');
+
+    const initialGmailBtn = gmailOption.querySelector('.gmail-btn-initial');
+    const gmailInputForm = gmailOption.querySelector('.social-input-form');
+
+    if (provider === 'Google') {
+        initialGoogleBtn.classList.remove('hidden');
+        googleInputForm.classList.remove('visible');
+        googleOption.classList.remove('hidden'); // Show Google option
+    } else if (provider === 'Gmail') {
+        initialGmailBtn.classList.remove('hidden');
+        gmailInputForm.classList.remove('visible');
+        gmailOption.classList.remove('hidden'); // Show Gmail option
+    }
+    socialDivider.classList.remove('hidden'); // Show the OR divider
+}
+
+function handleSocialInitialClick(event) {
+    const btn = event.currentTarget;
+    const provider = btn.classList.contains('google-btn-initial') ? 'Google' : 'Gmail';
+    showSocialInputForm(provider);
+}
+
+function handleSocialSubmit(event) {
+    event.preventDefault();
+    const submitBtn = event.currentTarget;
+    const provider = submitBtn.classList.contains('google-submit-btn') ? 'Google' : 'Gmail';
+    const emailInputId = provider === 'Google' ? 'google-email' : 'gmail-email';
+    const emailInput = document.getElementById(emailInputId);
+    const userEmail = emailInput ? emailInput.value : '';
+
+    if (!userEmail) {
+        alert(`Please enter your ${provider} email.`);
+        return;
+    }
+
+    if (submitBtn) {
+        submitBtn.classList.add('loading');
+        submitBtn.disabled = true;
+    }
+
+    // Simulate an API call delay
+    setTimeout(() => {
+        isLoggedIn = true;
+        socialUserName = userEmail.split('@')[0]; // Use part of the email as username
+        updateAuthButton();
+        closeLoginModal();
+
+        if (submitBtn) {
+            submitBtn.classList.remove('loading');
+            submitBtn.disabled = false;
+        }
+        console.log(`User logged in via ${provider} with email: ${userEmail}`);
+        // Reset form state
+        hideSocialInputForm(provider);
+        emailInput.value = ''; // Clear input
+    }, 1500);
+}
+
 function handleForgotPassword(event) {
     event.preventDefault();
     const identifier = prompt("Enter your email or username to reset your password:");
     if (identifier) {
         alert(`A password reset link has been sent to ${identifier}. (Simulation complete)`);
     }
-}
-
-function handleSocialLogin(event) {
-    const btn = event.currentTarget;
-    const provider = btn.classList.contains('google-btn') ? 'Google' : 'Gmail';
-    
-    if (btn) {
-        btn.classList.add('loading');
-        btn.disabled = true;
-    }
-
-    // Disable other social buttons during loading
-    document.querySelectorAll('.social-btn').forEach(b => { if(b !== btn) b.disabled = true; });
-
-    setTimeout(() => {
-        isLoggedIn = true;
-        socialUserName = `${provider} User`; // Simulate getting name from social provider
-        updateAuthButton();
-        closeLoginModal();
-        
-        if (btn) {
-            btn.classList.remove('loading');
-            btn.disabled = false;
-        }
-        // Re-enable all social buttons
-        document.querySelectorAll('.social-btn').forEach(b => b.disabled = false);
-        
-        console.log(`User logged in via ${provider}`);
-    }, 1500);
 }
 
 // Password Toggle Logic
@@ -264,9 +323,20 @@ document.addEventListener('DOMContentLoaded', () => {
         forgotPw.addEventListener('click', handleForgotPassword);
     }
 
-    // Handle Social Login Buttons
-    document.querySelectorAll('.social-btn').forEach(btn => {
-        btn.addEventListener('click', handleSocialLogin);
+    // Handle Social Login Buttons (initial buttons)
+    document.querySelectorAll('.social-btn-initial').forEach(btn => {
+        btn.addEventListener('click', handleSocialInitialClick);
+    });
+
+    // Handle Social Submit Buttons
+    document.querySelectorAll('.social-submit-btn').forEach(btn => {
+        btn.addEventListener('click', handleSocialSubmit);
+    });
+
+    // Handle Back Buttons
+    document.querySelectorAll('.back-btn').forEach(btn => {
+        const provider = btn.closest('#google-option') ? 'Google' : 'Gmail';
+        btn.addEventListener('click', () => hideSocialInputForm(provider));
     });
 
     setupPasswordToggle(); // Initialize password toggle

@@ -295,10 +295,10 @@ h6 {
 .google-btn:hover { background: #f8f9fa; border-color: #bbb; }
 .gmail-btn { color: #d93025; border-color: #f1d3d1; }
 .gmail-btn:hover { background: #fff5f5; border-color: #d93025; }
-
 /* Spinner Styles */
 .spinner {
     display: none;
+    flex-shrink: 0; /* Prevent spinner from shrinking */
     width: 20px;
     height: 20px;
     border: 3px solid rgba(192, 192, 192, 0.3);
@@ -333,4 +333,84 @@ h6 {
 .forgot-password:hover {
     color: dodgerblue;
     text-decoration: underline;
+}
+
+/* Social Login Input Forms */
+.social-option {
+    margin-bottom: 12px;
+    transition: opacity 0.3s ease, max-height 0.3s ease, margin 0.3s ease;
+    overflow: hidden; /* Ensures content is clipped during height transition */
+}
+
+.social-option.hidden {
+    opacity: 0;
+    max-height: 0;
+    margin-bottom: 0;
+    pointer-events: none;
+}
+
+.social-btn-initial {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    max-height: 50px; /* Approximate height of the button */
+    margin-bottom: 0;
+    transition: opacity 0.3s ease, transform 0.3s ease, max-height 0.3s ease, margin 0.3s ease;
+}
+
+.social-btn-initial.hidden {
+    opacity: 0;
+    transform: translateY(-10px);
+    pointer-events: none;
+    max-height: 0; /* Collapse height */
+    margin-bottom: -12px; /* Adjust margin to prevent gap */
+}
+
+.social-input-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.3s ease, transform 0.3s ease, max-height 0.3s ease;
+    pointer-events: none;
+    max-height: 0; /* Initially collapsed */
+    overflow: hidden;
+}
+
+.social-input-form.visible {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+    max-height: 200px; /* Sufficiently large max-height for the form */
+    overflow: visible; /* Allow content to be visible */
+}
+
+.social-input-form .input-group label {
+    color: #555; /* Adjust label color for social inputs */
+}
+
+.back-btn {
+    background-color: #eee;
+    color: #333;
+    border: 1px solid #ddd;
+    padding: 8px 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.2s;
+}
+
+.back-btn:hover {
+    background-color: #e0e0e0;
+}
+
+.social-divider.hidden {
+    opacity: 0;
+    max-height: 0;
+    margin: 0;
+    overflow: hidden;
+    pointer-events: none;
+    transition: opacity 0.3s ease, max-height 0.3s ease, margin 0.3s ease;
 }

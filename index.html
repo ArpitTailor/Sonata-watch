@@ -134,14 +134,41 @@ small gift from Bharani
                    <span>OR</span>
                </div>
                <div class="social-login-container">
-                   <button type="button" class="social-btn google-btn">
-                       <span class="btn-text">Continue with Google</span>
-                       <div class="spinner"></div>
-                   </button>
-                   <button type="button" class="social-btn gmail-btn">
-                       <span class="btn-text">Continue with Gmail</span>
-                       <div class="spinner"></div>
-                   </button>
+                   <!-- Google Login Section -->
+                   <div class="social-option" id="google-option">
+                       <button type="button" class="social-btn google-btn social-btn-initial">
+                           <span class="btn-text">Continue with Google</span>
+                       </button>
+                       <div class="social-input-form">
+                           <div class="input-group">
+                               <label for="google-email">Google Account</label>
+                               <input type="email" id="google-email" required placeholder="Enter your Google email">
+                           </div>
+                           <button type="button" class="submit-btn social-submit-btn google-submit-btn">
+                               <span class="btn-text">Sign in with Google</span>
+                               <div class="spinner"></div>
+                           </button>
+                           <button type="button" class="back-btn">Back</button>
+                       </div>
+                   </div>
+
+                   <!-- Gmail Login Section -->
+                   <div class="social-option" id="gmail-option">
+                       <button type="button" class="social-btn gmail-btn social-btn-initial">
+                           <span class="btn-text">Continue with Gmail</span>
+                       </button>
+                       <div class="social-input-form">
+                           <div class="input-group">
+                               <label for="gmail-email">Gmail Account</label>
+                               <input type="email" id="gmail-email" required placeholder="Enter your Gmail email">
+                           </div>
+                           <button type="button" class="submit-btn social-submit-btn gmail-submit-btn">
+                               <span class="btn-text">Sign in with Gmail</span>
+                               <div class="spinner"></div>
+                           </button>
+                           <button type="button" class="back-btn">Back</button>
+                       </div>
+                   </div>
                </div>
            </div>
        </div>

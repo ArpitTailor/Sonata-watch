@@ -38,10 +38,25 @@ function closeLoginModal() {
 
 function handleLoginSubmit(event) {
     event.preventDefault();
-    isLoggedIn = true;
-    updateAuthButton();
-    closeLoginModal();
-    console.log("User logged in");
+    const submitBtn = event.target.querySelector('.submit-btn');
+    
+    if (submitBtn) {
+        submitBtn.classList.add('loading');
+        submitBtn.disabled = true;
+    }
+
+    // Simulate an API call delay
+    setTimeout(() => {
+        isLoggedIn = true;
+        updateAuthButton();
+        closeLoginModal();
+        
+        if (submitBtn) {
+            submitBtn.classList.remove('loading');
+            submitBtn.disabled = false;
+        }
+        console.log("User logged in");
+    }, 1500);
 }
 
 // Password Toggle Logic

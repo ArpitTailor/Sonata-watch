@@ -286,3 +286,27 @@ h6 {
 .google-btn:hover { background: #f8f9fa; border-color: #bbb; }
 .gmail-btn { color: #d93025; border-color: #f1d3d1; }
 .gmail-btn:hover { background: #fff5f5; border-color: #d93025; }
+
+/* Spinner Styles */
+.spinner {
+    display: none;
+    width: 20px;
+    height: 20px;
+    border: 3px solid rgba(192, 192, 192, 0.3);
+    border-radius: 50%;
+    border-top-color: silver;
+    animation: spin 1s linear infinite;
+    margin: 0 auto;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+.submit-btn.loading .btn-text {
+    display: none;
+}
+
+.submit-btn.loading .spinner {
+    display: block;
+}

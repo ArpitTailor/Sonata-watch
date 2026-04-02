@@ -1,44 +1,175 @@
+small gift from Bharani
+
 <!DOCTYPE html>
 <html>
-<head>
-<title>ShopKart</title>
-<link rel="stylesheet" href="style.css">
-</head>
-<body>
+    <head>
+        <title>Our Webpage</title>
+        <link rel="stylesheet" href="index.css">
+        
+        <style>
+            body{
+                background-color: rgb(231, 231, 231);
+            }
 
-<!-- Navbar -->
-<header class="navbar">
-    <h2 class="logo">ShopKart</h2>
+            
+           .Top{
+                background-color: black;
+                text-align: center;
+                width: 80%;
+                margin-left: 10%;
+                border: 10px solid rgb(255, 255, 255);
+                border-radius: 100px;
+            }
+            h1{
+                color: silver;
+                font-size: 125px;
+            }
+            .Top img{
+                width: 60%;
+                height: 500px;
+                border: 2px silver solid;
+                border-radius: 50px;
+            }
+            h2{
+                font-size: 40px;
+                text-align: center;
+            }
+            .Sub{
+                transition: all 0.5s ease-in-out;
+                background-color: black;
+                width: 350px;
+                text-align: center;
+                 border-radius: 20px;
+            }
+            .Sub img{
+                width: 300px;
+                height: 200px;
+                border: 2px silver solid;
+                border-radius: 20px;
+            }
+            .Sub button{
+                transition: all 0.5s ease-in-out;
+                width: 300px;
+                height: 45px;
+                background-color: silver;
+                color: black;
+                font-size: large;
+                font-weight: bold;
+                border: 2px rgb(255, 255, 255) solid;
+                border-radius: 20px;
+            }
+            .Main{
+                
+                display: flex;
+                justify-content: space-evenly;
+            }
+            .Main:hover .Sub{
+                transform: scale(0.8);
+            }
+           .Main .Sub:hover{
+                transform: translateY(-30px) scale(0.9);
+            }
+            .Sub:hover button{
+                background-color: dodgerblue;
+                color: white;
+            }
+            h6{
+                text-align: center;
+                font-size: 40px;
+            }
+        </style>
+    </head>
+    
+    <body>
+        <br>
+       <div class="Top">
+        <h1>S O N A T A </h1>
+        <img src="https://img.freepik.com/premium-photo/black-luxury-watch-black-background_158023-2033.jpg" alt="Main image here">
+        <br><br><br>
+       </div>
+       <h2 >Recents Models</h2>
 
-    <input type="text" placeholder="Search for products..." class="search">
+       <div class="Main">
+        <div class="Sub">
+        <br>
+        <img src="https://pimwp.s3-accelerate.amazonaws.com/2024/12/Untitled-design-2024-12-30T180630.232.jpg" alt="">
+        <br><br>
+        <button>Add to Cart</button>
+        <br><br>
+       </div>
+       <div class="Sub">
+        <br>
+        <img src="https://www.sonatawatches.in/dw/image/v2/BKDD_PRD/on/demandware.static/-/Sites-titan-master-catalog/default/dw265d3bff/images/Sonata/Catalog/7152QL01_2.jpg?sw=600&sh=600" alt="">
+        <br><br>
+        <button>Add to Cart</button>
+        <br><br>
+       </div>
+       <div class="Sub">
+        <br>
+        <img src="https://img.thehourglass.com/tachyon/2025/03/WW25-UNN-DIVER-AIR-Hero-Banner.jpg?w=3840&quality=90" alt="">
+        <br><br>
+        <button>Add to Cart</button>
+        <br><br>
+       </div>
+       <div class="Sub">
+        <br>
+        <img src="https://www.watchonista.com/sites/default/files/styles/1140x0/public/watchographer/1/articles/499541/front/ulysse_nardin_freak_x_crystalium_0_rectangle.jpg?itok=cf0-Pz3L&timestamp=1756056613" alt="">
+        <br><br>
+        <button>Add to Cart</button>
+        <br><br>
+       </div>
+       <div class="Sub">
+        <br>
+        <img src="https://androidcommunity.com/wp-content/uploads/2021/10/Moto-Watch-100.jpg" alt="">
+        <br><br>
+        <button>Add to Cart</button>
+        <br><br>
+       </div>
+       </div>
+       <br><br>
+       <div class="Top">
+        <h1>S O N A T A </h1>
+       </div>
+       <h2 >Classic Models</h2>
 
-    <div class="nav-right">
-        <button>Login</button>
-        <span id="cart-count">0 🛒</span>
-    </div>
-</header>
-
-<!-- Categories -->
-<div class="categories">
-    <span>Mobiles</span>
-    <span>Fashion</span>
-    <span>Electronics</span>
-    <span>Home</span>
-    <span>Appliances</span>
-</div>
-
-<!-- Banner Slider -->
-<section class="banner">
-    <div class="slides">
-        <img src="https://source.unsplash.com/1200x300/?shopping" />
-        <img src="https://source.unsplash.com/1200x300/?sale" />
-        <img src="https://source.unsplash.com/1200x300/?electronics" />
-    </div>
-</section>
-
-<!-- Products -->
-<section id="products"></section>
-
-<script src="script.js"></script>
-</body>
+       <div class="Main">
+        <div class="Sub">
+        <br>
+        <img src="https://pimwp.s3-accelerate.amazonaws.com/2024/12/Untitled-design-2024-12-30T180630.232.jpg" alt="">
+        <br><br>
+        <button>Add to Cart</button>
+        <br><br>
+       </div>
+       <div class="Sub">
+        <br>
+        <img src="https://www.sonatawatches.in/dw/image/v2/BKDD_PRD/on/demandware.static/-/Sites-titan-master-catalog/default/dw265d3bff/images/Sonata/Catalog/7152QL01_2.jpg?sw=600&sh=600" alt="">
+        <br><br>
+        <button>Add to Cart</button>
+        <br><br>
+       </div>
+       <div class="Sub">
+        <br>
+        <img src="https://img.thehourglass.com/tachyon/2025/03/WW25-UNN-DIVER-AIR-Hero-Banner.jpg?w=3840&quality=90" alt="">
+        <br><br>
+        <button>Add to Cart</button>
+        <br><br>
+       </div>
+       <div class="Sub">
+        <br>
+        <img src="https://www.watchonista.com/sites/default/files/styles/1140x0/public/watchographer/1/articles/499541/front/ulysse_nardin_freak_x_crystalium_0_rectangle.jpg?itok=cf0-Pz3L&timestamp=1756056613" alt="">
+        <br><br>
+        <button>Add to Cart</button>
+        <br><br>
+       </div>
+       <div class="Sub">
+        <br>
+        <img src="https://androidcommunity.com/wp-content/uploads/2021/10/Moto-Watch-100.jpg" alt="">
+        <br><br>
+        <button>Add to Cart</button>
+        <br><br>
+       </div>
+       </div>
+       <h6>book@sonata.com</h6>
+    </body>
+    
 </html>

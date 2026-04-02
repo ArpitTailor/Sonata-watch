@@ -85,3 +85,18 @@ h6 {
     text-align: center;
     font-size: 40px;
 }
+
+/* Fly to cart animation styles */
+.flying-image {
+    position: fixed;
+    z-index: 10000;
+    pointer-events: none;
+    transition: all 0.8s cubic-bezier(0.42, 0, 0.58, 1);
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+#cart-count {
+    display: inline-block;
+    transition: transform 0.2s ease-in-out;
+}

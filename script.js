@@ -28,10 +28,51 @@ function updateCartDisplay() {
 
 // Cart: Function to add item to cart
 // It's better to pass product details if you plan to have a more complex cart
-function addCart(productName = "item") { // Added a default parameter for better context
-    cartCount++;
-    updateCartDisplay();
-    console.log(`Added "${productName}" to cart. Total items: ${cartCount}`);
+function addCart(event, productName = "item") { 
+    const button = event.target;
+    const cart = document.getElementById('cart-count');
+    const productCard = button.closest('.Sub');
+    const imgToCopy = productCard ? productCard.querySelector('img') : null;
+
+    if (!imgToCopy || !cart) {
+        cartCount++;
+        updateCartDisplay();
+        console.log(`Added "${productName}" to cart. Total items: ${cartCount}`);
+        return;
+    }
+
+    // Create a clone of the product image for the "fly" animation
+    const flyingImg = imgToCopy.cloneNode();
+    const rect = imgToCopy.getBoundingClientRect();
+    
+    flyingImg.classList.add('flying-image');
+    flyingImg.style.left = `${rect.left}px`;
+    flyingImg.style.top = `${rect.top}px`;
+    flyingImg.style.width = `${rect.width}px`;
+    flyingImg.style.height = `${rect.height}px`;
+
+    document.body.appendChild(flyingImg);
+
+    // Target position (cart icon)
+    const cartRect = cart.getBoundingClientRect();
+
+    // Trigger animation in next frame
+    setTimeout(() => {
+        flyingImg.style.left = `${cartRect.left}px`;
+        flyingImg.style.top = `${cartRect.top}px`;
+        flyingImg.style.width = '20px';
+        flyingImg.style.height = '20px';
+        flyingImg.style.opacity = '0.4';
+    }, 10);
+
+    flyingImg.addEventListener('transitionend', () => {
+        flyingImg.remove();
+        cartCount++;
+        updateCartDisplay();
+        console.log(`Added "${productName}" to cart. Total items: ${cartCount}`);
+        cart.style.transform = 'scale(1.5)';
+        setTimeout(() => cart.style.transform = 'scale(1)', 200);
+    }, { once: true });
 }
 
 // Function to load products dynamically
@@ -68,7 +109,7 @@ async function loadProducts() {
 
         // Attach event listeners after all elements are added to the DOM
         document.querySelectorAll('.add-to-cart-btn').forEach(button => {
-            button.addEventListener('click', (event) => addCart(event.target.dataset.productName));
+            button.addEventListener('click', (event) => addCart(event, event.target.dataset.productName));
         });
 
         // Re-run scroll reveal for dynamic elements
@@ -86,4 +127,11 @@ document.addEventListener('DOMContentLoaded', () => {
     updateCartDisplay(); // Set initial cart count
     loadProducts(); // Fetch and display products
     handleScrollReveal(); // Initialize animations
+
+    // Also handle static buttons in the HTML that aren't loaded via API
+    document.querySelectorAll('.Sub button').forEach(button => {
+        if (!button.classList.contains('add-to-cart-btn')) {
+            button.addEventListener('click', (event) => addCart(event));
+        }
+    });
 });

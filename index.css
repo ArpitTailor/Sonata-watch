@@ -100,3 +100,22 @@ h6 {
     display: inline-block;
     transition: transform 0.2s ease-in-out;
 }
+
+.auth-btn {
+    background-color: black;
+    color: silver;
+    border: 2px solid silver;
+    padding: 5px 25px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    margin-right: 20px;
+    font-size: 18px;
+}
+
+.auth-btn:hover {
+    background-color: dodgerblue;
+    color: white;
+    border-color: white;
+}

@@ -1,5 +1,21 @@
 let API = "http://localhost:5000/api/products";
 let cartCount = 0;
+let isLoggedIn = false;
+
+// Authentication Logic
+function updateAuthButton() {
+    const authBtn = document.getElementById('auth-btn');
+    if (authBtn) {
+        authBtn.innerText = isLoggedIn ? "Logout" : "Login";
+    }
+}
+
+function handleAuth() {
+    isLoggedIn = !isLoggedIn;
+    updateAuthButton();
+    // For now, we'll just log the state, but you could trigger a login modal here
+    console.log(isLoggedIn ? "User logged in" : "User logged out");
+}
 
 // Scroll Reveal Logic
 function handleScrollReveal() {
@@ -127,6 +143,12 @@ document.addEventListener('DOMContentLoaded', () => {
     updateCartDisplay(); // Set initial cart count
     loadProducts(); // Fetch and display products
     handleScrollReveal(); // Initialize animations
+    updateAuthButton(); // Set initial state for login button
+
+    const authBtn = document.getElementById('auth-btn');
+    if (authBtn) {
+        authBtn.addEventListener('click', handleAuth);
+    }
 
     // Also handle static buttons in the HTML that aren't loaded via API
     document.querySelectorAll('.Sub button').forEach(button => {

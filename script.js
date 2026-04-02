@@ -6,6 +6,7 @@ let isLoggedIn = false;
 let socialUserName = "";
 function updateAuthButton() {
     const authBtn = document.getElementById('auth-btn');
+    const mainHeader = document.getElementById('main-header'); // Get the header element
     const userGreeting = document.getElementById('user-greeting');
 
     if (authBtn) {
@@ -23,6 +24,15 @@ function updateAuthButton() {
             setTimeout(() => {
                 if (!isLoggedIn) userGreeting.innerText = "";
             }, 500);
+        }
+    }
+
+    // Toggle visibility of the main header based on login status
+    if (mainHeader) {
+        if (isLoggedIn) {
+            mainHeader.classList.add('visible');
+        } else {
+            mainHeader.classList.remove('visible');
         }
     }
 }

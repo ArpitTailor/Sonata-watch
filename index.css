@@ -1,5 +1,25 @@
 body {
     background-color: rgb(231, 231, 231);
+    overflow-x: hidden; /* Prevent horizontal scrollbar during animation */
+}
+
+#main-header {
+    background-color: rgb(231, 231, 231); /* Match body background */
+    width: 100%;
+    position: relative; /* Allows transform to work relative to its normal position */
+    transform: translateY(-100%); /* Start completely off-screen above */
+    opacity: 0;
+    transition: transform 0.6s ease-out, opacity 0.6s ease-out;
+    box-sizing: border-box; /* Include padding in width/height calculations */
+    z-index: 100; /* Ensure it's above other content */
+    text-align: right; /* Retain original alignment */
+    padding: 10px; /* Retain original padding */
+    font-size: 24px; /* Retain original font size */
+}
+
+#main-header.visible {
+    transform: translateY(0);
+    opacity: 1;
 }
 
 .Top {

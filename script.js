@@ -12,15 +12,36 @@ function updateAuthButton() {
     }
 
     if (userGreeting) {
-        userGreeting.innerText = isLoggedIn ? "Welcome back, User!" : "";
+        const nameInput = document.getElementById('username');
+        const userName = (isLoggedIn && nameInput && nameInput.value) ? nameInput.value : "User";
+        userGreeting.innerText = isLoggedIn ? `Welcome back, ${userName}!` : "";
     }
 }
 
 function handleAuth() {
-    isLoggedIn = !isLoggedIn;
+    if (isLoggedIn) {
+        isLoggedIn = false;
+        updateAuthButton();
+        console.log("User logged out");
+    } else {
+        openLoginModal();
+    }
+}
+
+function openLoginModal() {
+    document.getElementById('login-modal').classList.add('active');
+}
+
+function closeLoginModal() {
+    document.getElementById('login-modal').classList.remove('active');
+}
+
+function handleLoginSubmit(event) {
+    event.preventDefault();
+    isLoggedIn = true;
     updateAuthButton();
-    // For now, we'll just log the state, but you could trigger a login modal here
-    console.log(isLoggedIn ? "User logged in" : "User logged out");
+    closeLoginModal();
+    console.log("User logged in");
 }
 
 // Scroll Reveal Logic
@@ -154,6 +175,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const authBtn = document.getElementById('auth-btn');
     if (authBtn) {
         authBtn.addEventListener('click', handleAuth);
+    }
+
+    const loginForm = document.getElementById('login-form');
+    if (loginForm) {
+        loginForm.addEventListener('submit', handleLoginSubmit);
     }
 
     // Also handle static buttons in the HTML that aren't loaded via API

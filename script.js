@@ -208,35 +208,6 @@ function setupParallax() {
         bannerImg.style.transform = `translateY(${scrollValue * 0.15}px)`;
     });
 }
-
-// Sale Countdown Logic
-function initSaleCountdown() {
-    // Set target date to 3 days from the current time for demonstration
-    const countdownDate = new Date().getTime() + (3 * 24 * 60 * 60 * 1000);
-
-    const timer = setInterval(() => {
-        const now = new Date().getTime();
-        const distance = countdownDate - now;
-
-        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-        if (document.getElementById("days")) {
-            document.getElementById("days").innerText = String(days).padStart(2, '0');
-            document.getElementById("hours").innerText = String(hours).padStart(2, '0');
-            document.getElementById("minutes").innerText = String(minutes).padStart(2, '0');
-            document.getElementById("seconds").innerText = String(seconds).padStart(2, '0');
-        }
-
-        if (distance < 0) {
-            clearInterval(timer);
-            document.getElementById("sale-banner").style.display = "none";
-        }
-    }, 1000);
-}
-
 // Function to update cart display
 function updateCartDisplay() {
     const cartCountElement = document.getElementById("cart-count");
@@ -451,7 +422,6 @@ document.addEventListener('DOMContentLoaded', () => {
     loadProducts(); // Fetch and display products
     handleScrollReveal(); // Initialize animations
     setupParallax(); // Initialize banner parallax
-    initSaleCountdown(); // Start the sale timer
     updateAuthButton(); // Set initial state for login button
 
     const authBtn = document.getElementById('auth-btn');

@@ -1,10 +1,13 @@
 body {
-    background-color: rgb(231, 231, 231);
+    background: radial-gradient(circle at center, #1e1e1e 0%, #0a0a0a 100%);
+    background-attachment: fixed;
+    color: #ffffff;
     overflow-x: hidden; /* Prevent horizontal scrollbar during animation */
 }
 
 #main-header {
-    background-color: rgb(231, 231, 231); /* Match body background */
+    background-color: transparent; /* Allow the body gradient to show through */
+    color: #ffffff;
     width: 100%;
     position: relative; /* Allows transform to work relative to its normal position */
     transform: translateY(-100%); /* Start completely off-screen above */
@@ -29,6 +32,7 @@ body {
     margin-left: 10%;
     border: 10px solid rgb(255, 255, 255);
     border-radius: 100px;
+    overflow: hidden; /* Clips the image as it moves for a cleaner parallax look */
 }
 
 h1 {
@@ -41,11 +45,14 @@ h1 {
     height: 500px;
     border: 2px silver solid;
     border-radius: 50px;
+    will-change: transform;
+    transition: transform 0.1s linear; /* Smooths out the scroll updates */
 }
 
 h2 {
     font-size: 40px;
     text-align: center;
+    color: silver;
 }
 
 .Sub {
@@ -104,6 +111,7 @@ h2 {
 h6 {
     text-align: center;
     font-size: 40px;
+    color: #888;
 }
 
 /* Fly to cart animation styles */
@@ -142,7 +150,7 @@ h6 {
 
 .user-greeting {
     font-size: 18px;
-    color: #333;
+    color: silver;
     margin-right: 15px;
     font-weight: 500;
     opacity: 0;
@@ -518,3 +526,33 @@ h6 {
 }
 
 .quantity-btn:hover { background: #e0e0e0; }
+
+/* Sale Banner Styles */
+.sale-banner {
+    background: linear-gradient(135deg, #b8860b 0%, #ffd700 50%, #b8860b 100%);
+    color: #000;
+    text-align: center;
+    padding: 30px;
+    width: 80%;
+    margin: 20px auto;
+    border-radius: 30px;
+    box-shadow: 0 10px 30px rgba(255, 215, 0, 0.2);
+}
+
+.sale-banner h3 { margin: 0; font-size: 28px; font-weight: 800; }
+.sale-banner p { margin: 5px 0 15px; font-weight: 500; }
+
+#countdown-timer {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+}
+
+.timer-unit {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.timer-unit span { font-size: 36px; font-weight: 900; }
+.timer-unit label { font-size: 12px; text-transform: uppercase; font-weight: bold; }

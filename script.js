@@ -1,5 +1,5 @@
 let API = "http://localhost:5000/api/products";
-let cartCount = 0;
+let cart = [];
 let isLoggedIn = false;
 
 // Authentication Logic
@@ -201,24 +201,117 @@ function handleScrollReveal() {
 function updateCartDisplay() {
     const cartCountElement = document.getElementById("cart-count");
     if (cartCountElement) {
-        cartCountElement.innerText = cartCount + " 🛒";
+        const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+        cartCountElement.innerText = totalItems;
     } else {
         console.warn("Cart count element not found! Make sure an element with id 'cart-count' exists.");
     }
 }
 
+function openCartModal() {
+    renderCartItems();
+    document.getElementById('cart-modal').classList.add('active');
+}
+
+function closeCartModal() {
+    document.getElementById('cart-modal').classList.remove('active');
+}
+
+function renderCartItems() {
+    const container = document.getElementById('cart-items-container');
+    const totalPriceElement = document.getElementById('cart-total-price');
+    
+    if (!container) return;
+    
+    if (cart.length === 0) {
+        container.innerHTML = '<p style="text-align: center; color: #888; padding: 20px;">Your cart is empty.</p>';
+        totalPriceElement.innerText = '₹0';
+        document.getElementById('checkout-btn').disabled = true;
+        return;
+    }
+
+    document.getElementById('checkout-btn').disabled = false;
+    container.innerHTML = '';
+    let total = 0;
+
+    cart.forEach((item, index) => {
+        const itemPrice = parseInt(item.price.replace(/[^0-9]/g, '')) || 0;
+        total += (itemPrice * item.quantity);
+        
+        const itemDiv = document.createElement('div');
+        itemDiv.classList.add('cart-item');
+        itemDiv.innerHTML = `
+            <img src="${item.image}" alt="${item.name}">
+            <div class="cart-item-details">
+                <h4>${item.name}</h4>
+                <p>₹${itemPrice}</p>
+                <div class="quantity-controls">
+                    <button class="quantity-btn" onclick="updateQuantity(${index}, -1)">-</button>
+                    <span>${item.quantity}</span>
+                    <button class="quantity-btn" onclick="updateQuantity(${index}, 1)">+</button>
+                </div>
+            </div>
+            <button class="remove-item-btn" onclick="removeFromCart(${index})">&times;</button>
+        `;
+        container.appendChild(itemDiv);
+    });
+
+    totalPriceElement.innerText = `₹${total}`;
+}
+
+function updateQuantity(index, change) {
+    cart[index].quantity += change;
+    
+    if (cart[index].quantity <= 0) {
+        removeFromCart(index);
+    } else {
+        updateCartDisplay();
+        renderCartItems();
+    }
+}
+
+function removeFromCart(index) {
+    cart.splice(index, 1);
+    updateCartDisplay();
+    renderCartItems();
+}
+
+function openCheckoutModal() {
+    closeCartModal();
+    document.getElementById('checkout-modal').classList.add('active');
+}
+
+function closeCheckoutModal() {
+    document.getElementById('checkout-modal').classList.remove('active');
+}
+
 // Cart: Function to add item to cart
-// It's better to pass product details if you plan to have a more complex cart
-function addCart(event, productName = "item") { 
+function addCart(event, productData = null) { 
     const button = event.target;
-    const cart = document.getElementById('cart-count');
+    const cartBtn = document.getElementById('cart-btn');
     const productCard = button.closest('.Sub');
     const imgToCopy = productCard ? productCard.querySelector('img') : null;
 
-    if (!imgToCopy || !cart) {
-        cartCount++;
+    const newItem = productData || {
+        name: productCard?.querySelector('h4')?.innerText || "Sonata Watch",
+        price: productCard?.querySelector('p')?.innerText || "₹2500",
+        image: imgToCopy?.src || ""
+    };
+
+    // Check if item already exists in cart
+    const existingItemIndex = cart.findIndex(i => i.name === newItem.name);
+    
+    const addToData = () => {
+        if (existingItemIndex > -1) {
+            cart[existingItemIndex].quantity += 1;
+        } else {
+            cart.push({ ...newItem, quantity: 1 });
+        }
         updateCartDisplay();
-        console.log(`Added "${productName}" to cart. Total items: ${cartCount}`);
+    };
+
+    if (!imgToCopy || !cartBtn) {
+        addToData();
         return;
     }
 
@@ -235,24 +328,22 @@ function addCart(event, productName = "item") {
     document.body.appendChild(flyingImg);
 
     // Target position (cart icon)
-    const cartRect = cart.getBoundingClientRect();
+    const cartRect = cartBtn.getBoundingClientRect();
 
     // Trigger animation in next frame
     setTimeout(() => {
         flyingImg.style.left = `${cartRect.left}px`;
         flyingImg.style.top = `${cartRect.top}px`;
-        flyingImg.style.width = '20px';
-        flyingImg.style.height = '20px';
+        flyingImg.style.width = '30px';
+        flyingImg.style.height = '30px';
         flyingImg.style.opacity = '0.4';
     }, 10);
 
     flyingImg.addEventListener('transitionend', () => {
         flyingImg.remove();
-        cartCount++;
-        updateCartDisplay();
-        console.log(`Added "${productName}" to cart. Total items: ${cartCount}`);
-        cart.style.transform = 'scale(1.5)';
-        setTimeout(() => cart.style.transform = 'scale(1)', 200);
+        addToData();
+        cartBtn.style.transform = 'scale(1.5)';
+        setTimeout(() => cartBtn.style.transform = 'scale(1)', 200);
     }, { once: true });
 }
 
@@ -288,9 +379,14 @@ async function loadProducts() {
             container.appendChild(productCard);
         });
 
-        // Attach event listeners after all elements are added to the DOM
         document.querySelectorAll('.add-to-cart-btn').forEach(button => {
-            button.addEventListener('click', (event) => addCart(event, event.target.dataset.productName));
+            button.addEventListener('click', (event) => {
+                const card = event.target.closest('.card');
+                const name = card.querySelector('h4').innerText;
+                const price = card.querySelector('p').innerText;
+                const image = card.querySelector('img').src;
+                addCart(event, { name, price, image });
+            });
         });
 
         // Re-run scroll reveal for dynamic elements
@@ -329,6 +425,24 @@ document.addEventListener('DOMContentLoaded', () => {
     const forgotPw = document.getElementById('forgot-password');
     if (forgotPw) {
         forgotPw.addEventListener('click', handleForgotPassword);
+    }
+
+    const cartBtn = document.getElementById('cart-btn');
+    if (cartBtn) cartBtn.addEventListener('click', openCartModal);
+
+    const checkoutBtn = document.getElementById('checkout-btn');
+    if (checkoutBtn) checkoutBtn.addEventListener('click', openCheckoutModal);
+
+    const checkoutForm = document.getElementById('checkout-form');
+    if (checkoutForm) {
+        checkoutForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const name = document.getElementById('ship-name').value;
+            alert(`Thank you for your purchase, ${name}! Your order has been placed successfully.`);
+            cart = [];
+            updateCartDisplay();
+            closeCheckoutModal();
+        });
     }
 
     // Handle Social Login Buttons

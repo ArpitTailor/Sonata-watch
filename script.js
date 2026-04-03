@@ -105,10 +105,26 @@ function handleRecoverySubmit(event) {
     }, 1500);
 }
 
-function handleSocialLogin(event) {
-    const btn = event.currentTarget;
-    const provider = btn.classList.contains('google-btn') ? 'Google' : 'Gmail';
+function toggleSocialForm(optionId, show) {
+    const option = document.getElementById(optionId);
+    const initialBtn = option.querySelector('.social-btn-initial');
+    const form = option.querySelector('.social-input-form');
     
+    if (show) {
+        initialBtn.classList.add('hidden');
+        form.classList.add('visible');
+    } else {
+        initialBtn.classList.remove('hidden');
+        form.classList.remove('visible');
+    }
+}
+
+function selectSocialAccount(email, provider) {
+    socialUserName = email.split('@')[0];
+    performSocialLogin(null, provider);
+}
+
+function performSocialLogin(btn, provider) {
     if (btn) {
         btn.classList.add('loading');
         btn.disabled = true;
@@ -119,10 +135,11 @@ function handleSocialLogin(event) {
 
     setTimeout(() => {
         isLoggedIn = true;
-        socialUserName = `${provider} User`; // Simulate getting name from social provider
+        if (!socialUserName) socialUserName = `${provider} User`;
+        
         updateAuthButton();
         closeLoginModal();
-        
+
         if (btn) {
             btn.classList.remove('loading');
             btn.disabled = false;
@@ -132,6 +149,22 @@ function handleSocialLogin(event) {
         
         console.log(`User logged in via ${provider}`);
     }, 1500);
+}
+
+function handleSocialLogin(event) {
+    const btn = event.currentTarget;
+    const provider = btn.classList.contains('google-btn') ? 'Google' : 'Gmail';
+    const optionId = provider.toLowerCase() + '-option';
+
+    if (btn.classList.contains('social-btn-initial')) {
+        toggleSocialForm(optionId, true);
+    } else {
+        const emailInput = document.getElementById(`${provider.toLowerCase()}-email`);
+        if (emailInput && emailInput.value) {
+            socialUserName = emailInput.value.split('@')[0];
+        }
+        performSocialLogin(btn, provider);
+    }
 }
 
 // Password Toggle Logic
@@ -272,6 +305,12 @@ async function loadProducts() {
 
 // Initialize cart display and load products when the DOM is fully loaded
 document.addEventListener('DOMContentLoaded', () => {
+    // Reveal the main header (containing the Login button) on page load
+    const header = document.getElementById('main-header');
+    if (header) {
+        setTimeout(() => header.classList.add('visible'), 100);
+    }
+
     updateCartDisplay(); // Set initial cart count
     loadProducts(); // Fetch and display products
     handleScrollReveal(); // Initialize animations
@@ -295,6 +334,17 @@ document.addEventListener('DOMContentLoaded', () => {
     // Handle Social Login Buttons
     document.querySelectorAll('.social-btn').forEach(btn => {
         btn.addEventListener('click', handleSocialLogin);
+    });
+    
+    document.querySelectorAll('.social-submit-btn').forEach(btn => {
+        btn.addEventListener('click', handleSocialLogin);
+    });
+
+    document.querySelectorAll('.back-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const optionId = e.target.closest('.social-option').id;
+            toggleSocialForm(optionId, false);
+        });
     });
 
     const recoveryForm = document.getElementById('recovery-form');

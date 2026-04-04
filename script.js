@@ -1,6 +1,7 @@
 let API = "http://localhost:5000/api/products";
 let cart = [];
 let isLoggedIn = false;
+const cartSuccessSound = new Audio('https://assets.mixkit.co/active_storage/sfx/2869/2869-preview.mp3');
 
 // Authentication Logic
 let socialUserName = "";
@@ -362,6 +363,11 @@ function addCart(event, productData = null) {
     flyingImg.addEventListener('transitionend', () => {
         flyingImg.remove();
         addToData();
+        
+        // Play success sound
+        cartSuccessSound.currentTime = 0; // Reset to start for rapid clicks
+        cartSuccessSound.play().catch(() => { /* Autoplay block catch */ });
+
         cartBtn.style.transform = 'scale(1.5)';
         setTimeout(() => cartBtn.style.transform = 'scale(1)', 200);
     }, { once: true });
@@ -383,11 +389,13 @@ async function loadProducts() {
         }
 
         container.innerHTML = ''; // Clear any existing static content
-        products.forEach(p => {
+        products.forEach((p, index) => {
             // Using template literals and proper event listener assignment
             // It's generally better to use addEventListener instead of onclick in HTML
             const productCard = document.createElement('div');
             productCard.classList.add('card', 'Sub', 'reveal'); // Added reveal class
+            // Apply staggered transition delay
+            productCard.style.transitionDelay = `${index * 0.1}s`;
             productCard.innerHTML = `
                 <br>
                 <img src="${p.image}" alt="${p.name}">

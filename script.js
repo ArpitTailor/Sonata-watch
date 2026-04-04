@@ -421,6 +421,14 @@ async function loadProducts() {
 
 // Initialize cart display and load products when the DOM is fully loaded
 document.addEventListener('DOMContentLoaded', () => {
+    // Handle Preloader removal
+    window.addEventListener('load', () => {
+        const loader = document.getElementById('loader-wrapper');
+        if (loader) {
+            loader.classList.add('loaded');
+        }
+    });
+
     // Reveal the main header (containing the Login button) on page load
     const header = document.getElementById('main-header');
     if (header) {
@@ -432,6 +440,15 @@ document.addEventListener('DOMContentLoaded', () => {
     handleScrollReveal(); // Initialize animations
     setupParallax(); // Initialize banner parallax
     updateAuthButton(); // Set initial state for login button
+
+    // Mouse follower for liquid background
+    const cursorBlob = document.querySelector('.cursor-blob');
+    if (cursorBlob) {
+        window.addEventListener('mousemove', (e) => {
+            // Center the 250px blob on the cursor (250 / 2 = 125)
+            cursorBlob.style.transform = `translate(${e.clientX - 125}px, ${e.clientY - 125}px)`;
+        });
+    }
 
     const authBtn = document.getElementById('auth-btn');
     if (authBtn) {

@@ -549,4 +549,23 @@ h6 {
     transition: background 0.2s;
 }
 
+/* Payment Info Styles */
+.payment-info-box {
+    margin-top: 15px;
+    padding: 15px;
+    background: #f8f9fa;
+    border: 1px dashed #d4af37;
+    border-radius: 10px;
+    text-align: center;
+    color: #333;
+}
+
+.qr-code-img {
+    width: 150px;
+    height: 150px;
+    margin: 0 auto;
+    border: 4px solid white;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
 .quantity-btn:hover { background: #e0e0e0; }

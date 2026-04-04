@@ -289,6 +289,9 @@ function removeFromCart(index) {
 
 function openCheckoutModal() {
     closeCartModal();
+    // Reset payment details when opening
+    const paymentDetailsDiv = document.getElementById('payment-details');
+    if (paymentDetailsDiv) paymentDetailsDiv.style.display = 'none';
     document.getElementById('checkout-modal').classList.add('active');
 }
 

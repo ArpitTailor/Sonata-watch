@@ -298,6 +298,12 @@ function closeCheckoutModal() {
 
 // Cart: Function to add item to cart
 function addCart(event, productData = null) { 
+    if (!isLoggedIn) {
+        alert("Please login first to add items to your cart.");
+        openLoginModal();
+        return;
+    }
+
     const button = event.target;
     const cartBtn = document.getElementById('cart-btn');
     const productCard = button.closest('.Sub');

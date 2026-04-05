@@ -760,3 +760,32 @@ footer {
 }
 
 .quantity-btn:hover { background: #e0e0e0; }
+
+.cancel-action {
+    display: block;
+    text-align: center;
+    margin-top: 15px;
+    color: #888;
+    text-decoration: none;
+    font-size: 14px;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.cancel-action:hover {
+    color: #333;
+    text-decoration: underline;
+}
+
+.toggle-auth {
+    text-align: center;
+    margin-top: 15px;
+    font-size: 14px;
+    color: #666;
+}
+.toggle-auth a {
+    color: #d4af37;
+    text-decoration: none;
+    font-weight: bold;
+    cursor: pointer;
+}

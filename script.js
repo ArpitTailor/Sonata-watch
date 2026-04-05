@@ -45,6 +45,14 @@ function openLoginModal() {
 
 function closeLoginModal() {
     document.getElementById('login-modal').classList.remove('active');
+    // Reset to login view for the next time it's opened
+    showLogin();
+}
+
+function closeAllModals() {
+    document.querySelectorAll('.modal-overlay').forEach(modal => {
+        modal.classList.remove('active');
+    });
 }
 
 function handleLoginSubmit(event) {
@@ -67,6 +75,39 @@ function handleLoginSubmit(event) {
             submitBtn.disabled = false;
         }
         console.log("User logged in");
+    }, 1500);
+}
+
+function showSignUp(e) {
+    if (e) e.preventDefault();
+    document.getElementById('login-form').style.display = 'none';
+    document.getElementById('signup-form').style.display = 'block';
+    document.getElementById('auth-modal-title').innerText = "Create an Account";
+}
+
+function showLogin(e) {
+    if (e) e.preventDefault();
+    document.getElementById('signup-form').style.display = 'none';
+    document.getElementById('login-form').style.display = 'block';
+    document.getElementById('auth-modal-title').innerText = "Login to Sonata";
+}
+
+function handleSignUpSubmit(event) {
+    event.preventDefault();
+    const submitBtn = event.target.querySelector('.submit-btn');
+    
+    if (submitBtn) {
+        submitBtn.classList.add('loading');
+        submitBtn.disabled = true;
+    }
+
+    setTimeout(() => {
+        alert("Account created successfully! Please login with your credentials.");
+        showLogin();
+        if (submitBtn) {
+            submitBtn.classList.remove('loading');
+            submitBtn.disabled = false;
+        }
     }, 1500);
 }
 
@@ -303,7 +344,6 @@ function closeCheckoutModal() {
 // Cart: Function to add item to cart
 function addCart(event, productData = null) { 
     if (!isLoggedIn) {
-        alert("Please login first to add items to your cart.");
         openLoginModal();
         return;
     }
@@ -467,6 +507,16 @@ document.addEventListener('DOMContentLoaded', () => {
     if (loginForm) {
         loginForm.addEventListener('submit', handleLoginSubmit);
     }
+
+    const signupForm = document.getElementById('signup-form');
+    if (signupForm) {
+        signupForm.addEventListener('submit', handleSignUpSubmit);
+    }
+
+    const showSignupLink = document.getElementById('show-signup');
+    if (showSignupLink) showSignupLink.addEventListener('click', showSignUp);
+    const showLoginLink = document.getElementById('show-login');
+    if (showLoginLink) showLoginLink.addEventListener('click', showLogin);
 
     const forgotPw = document.getElementById('forgot-password');
     if (forgotPw) {

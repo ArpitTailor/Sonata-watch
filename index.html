@@ -163,7 +163,7 @@ small gift from Bharani
        <div id="login-modal" class="modal-overlay">
            <div class="modal-content">
                <span class="close-btn" onclick="closeLoginModal()">&times;</span>
-               <h2>Login to Sonata</h2>
+               <h2 id="auth-modal-title">Login to Sonata</h2>
                <form id="login-form">
                    <div class="input-group">
                        <label for="username">Username</label>
@@ -181,7 +181,34 @@ small gift from Bharani
                        <span class="btn-text">Login</span>
                        <div class="spinner"></div>
                    </button>
+                   <p class="toggle-auth">Don't have an account? <a id="show-signup">Sign Up</a></p>
                </form>
+
+               <form id="signup-form" style="display: none;">
+                   <div class="input-group">
+                       <label for="signup-fullname">Full Name</label>
+                       <input type="text" id="signup-fullname" required placeholder="Enter your full name">
+                   </div>
+                   <div class="input-group">
+                       <label for="signup-email">Email Address</label>
+                       <input type="email" id="signup-email" required placeholder="Enter your email">
+                   </div>
+                   <div class="input-group">
+                       <label for="signup-username">Username</label>
+                       <input type="text" id="signup-username" required placeholder="Choose a username">
+                   </div>
+                   <div class="input-group">
+                       <label for="signup-password-field">Password</label>
+                       <input type="password" id="signup-password-field" required placeholder="Create a password">
+                   </div>
+                   <button type="submit" class="submit-btn">
+                       <span class="btn-text">Create Account</span>
+                       <div class="spinner"></div>
+                   </button>
+                   <p class="toggle-auth">Already have an account? <a id="show-login">Login</a></p>
+               </form>
+
+               <a href="javascript:void(0)" class="cancel-action" onclick="closeLoginModal()">Maybe Later - Continue Browsing</a>
                <div class="social-divider">
                    <span>OR</span>
                </div>
@@ -255,6 +282,7 @@ small gift from Bharani
                        <div class="spinner"></div>
                    </button>
                </form>
+               <a href="javascript:void(0)" class="cancel-action" onclick="closeRecoveryModal()">Back to Login</a>
            </div>
        </div>
 
@@ -272,6 +300,7 @@ small gift from Bharani
                        <span id="cart-total-price">₹0</span>
                    </div>
                    <button id="checkout-btn" class="submit-btn">Proceed to Checkout</button>
+                   <a href="javascript:void(0)" class="cancel-action" onclick="closeCartModal()">Keep Shopping</a>
                </div>
            </div>
        </div>
@@ -318,6 +347,7 @@ small gift from Bharani
                        <p id="payment-number" style="font-size: 16px; font-weight: bold; color: #d4af37;"></p>
                    </div>
                    <button type="submit" class="submit-btn">Place Order</button>
+                   <a href="javascript:void(0)" class="cancel-action" onclick="closeCheckoutModal()">Back to Cart</a>
                </form>
            </div>
        </div>

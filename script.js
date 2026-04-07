@@ -10,14 +10,14 @@ function updateAuthButton() {
     const userGreeting = document.getElementById('user-greeting');
 
     if (authBtn) {
-        authBtn.innerText = isLoggedIn ? "Logout" : "Login";
+        authBtn.innerHTML = isLoggedIn ? "Logout" : "👤 Login";
     }
 
     if (userGreeting) {
         if (isLoggedIn) {
             const nameInput = document.getElementById('username');
             const userName = socialUserName ? socialUserName : ((nameInput && nameInput.value) ? nameInput.value : "User");
-            userGreeting.innerText = `Welcome back, ${userName}!`;
+            userGreeting.innerText = `Hello, ${userName}`;
             setTimeout(() => userGreeting.classList.add('visible'), 10);
         } else {
             userGreeting.classList.remove('visible');
@@ -378,6 +378,17 @@ function addCart(event, productData = null) {
         }
         updateCartDisplay();
     };
+
+    // Provide immediate visual feedback on the button
+    if (button && button.classList.contains('add-to-cart-btn')) {
+        const originalText = button.innerText;
+        button.innerText = "Added ✓";
+        button.classList.add('added');
+        setTimeout(() => {
+            button.innerText = originalText;
+            button.classList.remove('added');
+        }, 1500);
+    }
 
     if (!imgToCopy || !cartBtn) {
         addToData();

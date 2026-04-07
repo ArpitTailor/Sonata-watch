@@ -334,6 +334,13 @@ function openCheckoutModal() {
     // Reset payment details when opening
     const paymentDetailsDiv = document.getElementById('payment-details');
     if (paymentDetailsDiv) paymentDetailsDiv.style.display = 'none';
+    
+    // Show/hide guest prompt based on login status
+    const authPrompt = document.getElementById('checkout-auth-prompt');
+    if (authPrompt) {
+        authPrompt.style.display = isLoggedIn ? 'none' : 'flex';
+    }
+
     document.getElementById('checkout-modal').classList.add('active');
 }
 
@@ -344,6 +351,7 @@ function closeCheckoutModal() {
 // Cart: Function to add item to cart
 function addCart(event, productData = null) { 
     if (!isLoggedIn) {
+        // Show login modal as a suggestion, but do NOT return early
         openLoginModal();
         return;
     }

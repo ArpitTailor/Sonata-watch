@@ -242,12 +242,21 @@ function handleScrollReveal() {
 // Parallax Effect for the Main Banner
 function setupParallax() {
     const bannerImg = document.querySelector('.Top img');
-    if (!bannerImg) return;
+    const bannerTitle = document.querySelector('.Top h1');
+    const blobs = document.querySelectorAll('.blob:not(.cursor-blob)');
+    if (!bannerImg || !bannerTitle) return;
 
     window.addEventListener('scroll', () => {
         const scrollValue = window.scrollY;
-        // The factor 0.15 determines how much the image "lags" behind the scroll
+        // Multi-layered parallax: elements move at different "parallel" speeds
         bannerImg.style.transform = `translateY(${scrollValue * 0.15}px)`;
+        bannerTitle.style.transform = `translateY(${scrollValue * -0.1}px)`;
+
+        // Apply varied parallax speeds to the background liquid blobs
+        // Different multipliers (0.25, 0.15, -0.1) create a sense of depth
+        if (blobs[0]) blobs[0].style.top = `${-100 + scrollValue * 0.25}px`;
+        if (blobs[1]) blobs[1].style.bottom = `${-50 + scrollValue * 0.15}px`;
+        if (blobs[2]) blobs[2].style.top = `calc(50% + ${scrollValue * -0.1}px)`;
     });
 }
 // Function to update cart display

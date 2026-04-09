@@ -158,8 +158,8 @@ body {
     width: 100%;
     position: relative; /* Allows transform to work relative to its normal position */
     transform: translateY(-100%); /* Start completely off-screen above */
-    opacity: 0;
-    transition: transform 0.6s ease-out, opacity 0.6s ease-out;
+    opacity: 0; 
+    transition: transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.6s ease-out; /* Enhanced transition for subtle bounce */
     box-sizing: border-box; /* Include padding in width/height calculations */
     z-index: 100; /* Ensure it's above other content */
     text-align: right; /* Retain original alignment */
@@ -341,6 +341,13 @@ footer {
     line-height: 1.6;
 }
 
+.footer-section a:hover {
+    color: #d4af37; /* Golden color on hover */
+    text-decoration: underline; /* Underline on hover */
+}
+
+
+
 .footer-bottom {
     text-align: center;
     margin-top: 40px;
@@ -373,7 +380,7 @@ footer {
     border-radius: 20px;
     cursor: pointer;
     font-weight: bold;
-    transition: all 0.3s ease;
+    transition: all 0.3s ease, transform 0.3s ease; /* Added transform to transition */
     margin-right: 20px;
     font-size: 18px;
 }
@@ -381,6 +388,7 @@ footer {
 .auth-btn:hover {
     background-color: #d4af37;
     color: black;
+    transform: scale(1.05); /* Subtle scale on hover */
     border-color: #d4af37;
 }
 
@@ -547,6 +555,7 @@ footer {
     border: 1px solid #ddd;
     border-radius: 8px;
     background: white;
+    color: #333; /* Ensure text color is visible */
     cursor: pointer;
     font-weight: 500;
     transition: all 0.2s ease;
@@ -554,6 +563,11 @@ footer {
     align-items: center;
     justify-content: center;
     font-size: 16px;
+}
+
+.social-btn:hover {
+    transform: translateY(-2px); /* Subtle lift */
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1); /* Subtle shadow */
 }
 
 .google-btn:hover { background: #f8f9fa; border-color: #bbb; }

@@ -798,18 +798,24 @@ footer {
 
 .cancel-action {
     display: block;
-    text-align: center;
-    margin-top: 15px;
+    margin: 20px auto 0;
+    padding: 10px 20px;
+    background: #f0f0f0;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    width: fit-content;
     color: #888;
     text-decoration: none;
     font-size: 14px;
     cursor: pointer;
-    transition: color 0.2s;
+    transition: all 0.2s ease;
+    text-align: center;
 }
 
 .cancel-action:hover {
     color: #333;
-    text-decoration: underline;
+    background: #e8e8e8;
+    border-color: #ccc;
 }
 
 .toggle-auth {

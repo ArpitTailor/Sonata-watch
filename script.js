@@ -339,6 +339,12 @@ function removeFromCart(index) {
 }
 
 function openCheckoutModal() {
+    // Enforce login only when the user attempts to finalize a purchase.
+    if (!isLoggedIn) {
+        openLoginModal();
+        return;
+    }
+
     closeCartModal();
     // Reset payment details when opening
     const paymentDetailsDiv = document.getElementById('payment-details');
@@ -359,12 +365,7 @@ function closeCheckoutModal() {
 
 // Cart: Function to add item to cart
 function addCart(event, productData = null) { 
-    if (!isLoggedIn) {
-        // Show login modal as a suggestion, but do NOT return early
-        openLoginModal();
-        return;
-    }
-
+    // Allowing guest users to add items to cart without immediate login.
     const button = event.target;
     const cartBtn = document.getElementById('cart-btn');
     const productCard = button.closest('.Sub');

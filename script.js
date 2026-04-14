@@ -10,7 +10,7 @@ function updateAuthButton() {
     const userGreeting = document.getElementById('user-greeting');
 
     if (authBtn) {
-        authBtn.innerHTML = isLoggedIn ? "Logout" : "👤 Login";
+        authBtn.innerHTML = isLoggedIn ? "🚪 Logout" : "👤 Login";
     }
 
     if (userGreeting) {

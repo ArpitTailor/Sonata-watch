@@ -437,7 +437,6 @@ footer {
 .user-greeting {
     font-size: 18px;
     color: silver;
-    margin-right: 15px;
     font-weight: 500;
     opacity: 0;
     transform: translateY(-10px);
@@ -448,6 +447,30 @@ footer {
 .user-greeting.visible {
     opacity: 1;
     transform: translateY(0);
+}
+
+.search-bar {
+    background: rgba(255, 255, 255, 0.1); /* Semi-transparent white */
+    border: 1px solid rgba(255, 255, 255, 0.2); /* Lighter border */
+    backdrop-filter: blur(10px); /* Glassmorphism blur effect */
+    -webkit-backdrop-filter: blur(10px); /* Safari support */
+    border-radius: 20px;
+    padding: 8px 15px;
+    color: #ffffff;
+    font-size: 16px;
+    outline: none; /* Remove default outline */
+    transition: all 0.3s ease;
+    width: 200px; /* Initial width */
+}
+
+.search-bar::placeholder {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.search-bar:focus {
+    border-color: #d4af37; /* Golden border on focus */
+    box-shadow: 0 0 10px rgba(212, 175, 55, 0.5); /* Golden glow on focus */
+    width: 250px; /* Expand on focus */
 }
 
 /* Modal Overlay */

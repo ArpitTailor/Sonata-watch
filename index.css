@@ -36,15 +36,14 @@ body {
     border-top: 3px solid #d4af37;
     border-radius: 50%;
     margin: 0 auto;
-    animation: spin 1.5s linear infinite;
-    filter: drop-shadow(0 0 10px #d4af37);
+    animation: spin 2s linear infinite;
 }
 
 /* Enhanced Spinner for a more liquid feel */
 @keyframes spin {
-    0% { transform: rotate(0deg); border-radius: 50%; }
-    50% { border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%; }
-    100% { transform: rotate(360deg); border-radius: 50%; }
+    0% { transform: rotate(0deg); border-radius: 50%; filter: drop-shadow(0 0 5px #d4af37); }
+    50% { border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%; filter: drop-shadow(0 0 20px #d4af37); }
+    100% { transform: rotate(360deg); border-radius: 50%; filter: drop-shadow(0 0 5px #d4af37); }
 }
 
 .loader-logo {
@@ -58,14 +57,14 @@ body {
 /* Scroll Reveal Base States */
 .reveal {
     opacity: 0;
-    transform: translateY(40px);
+    transform: translateY(60px) scale(0.9);
     transition: opacity 1.2s cubic-bezier(0.22, 1, 0.36, 1), 
                 transform 1.2s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .reveal.active {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateY(0) scale(1);
 }
 
 /* Subtle entrance glow for product cards */
@@ -234,6 +233,10 @@ h2 {
     animation: shimmerEffect 6s infinite;
     pointer-events: none;
     z-index: 5;
+}
+
+.Sub:hover::after {
+    animation: shimmerEffect 2s infinite;
 }
 
 @keyframes shimmerEffect {

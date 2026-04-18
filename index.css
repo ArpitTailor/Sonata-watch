@@ -102,7 +102,6 @@ body {
     border-radius: 50%;
     opacity: 0.7;
     filter: blur(30px);
-    transition: top 0.1s linear, bottom 0.1s linear; /* Ensures smooth movement during scroll */
 }
 
 .blob:nth-child(1) {
@@ -132,6 +131,20 @@ body {
     animation: liquidMove 15s infinite ease-in-out;
 }
 
+/* Pulse/Ripple animation for the liquid cursor */
+.cursor-blob.pulse {
+    animation: blobPulse 0.8s cubic-bezier(0.24, 0, 0.22, 1);
+}
+
+@keyframes blobPulse {
+    0% { 
+        box-shadow: 0 0 0 0px rgba(212, 175, 55, 0.8);
+    }
+    100% { 
+        box-shadow: 0 0 0 100px rgba(212, 175, 55, 0);
+    }
+}
+
 @keyframes liquidMove {
     0% { transform: translate(0, 0) rotate(0deg) scale(1); }
     33% { transform: translate(10vw, 15vh) rotate(120deg) scale(1.2); }
@@ -148,7 +161,6 @@ body {
     left: 0;
     pointer-events: none; /* Critical: allows clicking buttons through the blob */
     z-index: 1;
-    transition: transform 0.2s cubic-bezier(0.23, 1, 0.32, 1); /* Smoother cursor lag */
 }
 
 #main-header {
@@ -188,7 +200,6 @@ h1 {
     color: #d4af37; /* Golden color */
     font-size: 125px;
     will-change: transform;
-    transition: transform 0.1s linear;
 }
 
 .Top img {
@@ -197,7 +208,6 @@ h1 {
     border: 2px solid #000000;
     border-radius: 50px;
     will-change: transform;
-    transition: transform 0.1s linear; /* Smooths out the scroll updates */
 }
 
 h2 {

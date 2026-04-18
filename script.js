@@ -245,19 +245,26 @@ function setupParallax() {
     const bannerTitle = document.querySelector('.Top h1');
     const blobs = document.querySelectorAll('.blob:not(.cursor-blob)');
     if (!bannerImg || !bannerTitle) return;
+    
+    let ticking = false;
 
     window.addEventListener('scroll', () => {
-        const scrollValue = window.scrollY;
-        // Multi-layered parallax: elements move at different "parallel" speeds
-        bannerImg.style.transform = `translateY(${scrollValue * 0.15}px)`;
-        bannerTitle.style.transform = `translateY(${scrollValue * -0.1}px)`;
+        if (!ticking) {
+            window.requestAnimationFrame(() => {
+                const scrollValue = window.scrollY;
+                // Multi-layered parallax: elements move at different "parallel" speeds
+                bannerImg.style.transform = `translateY(${scrollValue * 0.2}px) scale(${1 + scrollValue * 0.0001})`;
+                bannerTitle.style.transform = `translateY(${scrollValue * -0.12}px) skewX(${scrollValue * 0.01}deg)`;
 
-        // Apply varied parallax speeds to the background liquid blobs
-        // Different multipliers (0.25, 0.15, -0.1) create a sense of depth
-        if (blobs[0]) blobs[0].style.top = `${-100 + scrollValue * 0.25}px`;
-        if (blobs[1]) blobs[1].style.bottom = `${-50 + scrollValue * 0.15}px`;
-        if (blobs[2]) blobs[2].style.top = `calc(50% + ${scrollValue * -0.1}px)`;
-    });
+                // Apply varied parallax speeds to the background liquid blobs for enhanced depth
+                if (blobs[0]) blobs[0].style.top = `${-100 + scrollValue * 0.3}px`;
+                if (blobs[1]) blobs[1].style.bottom = `${-50 + scrollValue * 0.2}px`;
+                if (blobs[2]) blobs[2].style.top = `calc(50% + ${scrollValue * -0.15}px)`;
+                ticking = false;
+            });
+            ticking = true;
+        }
+    }, { passive: true });
 }
 // Function to update cart display
 function updateCartDisplay() {
@@ -369,6 +376,14 @@ function addCart(event, productData = null) {
         alert("Please login to add items to your cart.");
         openLoginModal();
         return;
+    }
+
+    // Trigger the ripple effect on the cursor blob
+    const cursorBlob = document.querySelector('.cursor-blob');
+    if (cursorBlob) {
+        cursorBlob.classList.remove('pulse');
+        void cursorBlob.offsetWidth; // Trigger reflow to restart animation
+        cursorBlob.classList.add('pulse');
     }
 
     const button = event.target;
@@ -525,12 +540,62 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Mouse follower for liquid background
     const cursorBlob = document.querySelector('.cursor-blob');
-    if (cursorBlob) {
-        window.addEventListener('mousemove', (e) => {
-            // Center the 250px blob on the cursor (250 / 2 = 125)
-            cursorBlob.style.transform = `translate(${e.clientX - 125}px, ${e.clientY - 125}px)`;
+    const bgBlobs = document.querySelectorAll('.blob:not(.cursor-blob)');
+    let mouseX = window.innerWidth / 2;
+    let mouseY = window.innerHeight / 2;
+    let currentX = mouseX;
+    let currentY = mouseY;
+    let currentScale = 1;
+
+    window.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+    });
+
+    const smoothMove = () => {
+        let targetX = mouseX;
+        let targetY = mouseY;
+        let targetScale = 1;
+
+        // Magnetic attraction logic for interactive elements
+        const magnetics = document.querySelectorAll('.add-to-cart-btn, .cart-btn, .auth-btn');
+        
+        magnetics.forEach(el => {
+            const rect = el.getBoundingClientRect();
+            const centerX = rect.left + rect.width / 2;
+            const centerY = rect.top + rect.height / 2;
+            const dx = mouseX - centerX;
+            const dy = mouseY - centerY;
+            const distance = Math.sqrt(dx * dx + dy * dy);
+
+            // If mouse is within 150px of a button, gravitate the blob center towards it
+            if (distance < 150) {
+                targetX = centerX + (dx * 0.3); // 70% pull toward center
+                targetY = centerY + (dy * 0.3);
+                targetScale = 0.6; // Shrink blob to "focus" on the button
+            }
         });
-    }
+
+        // Linear interpolation (lerp) for smooth trailing effect
+        currentX += (targetX - currentX) * 0.08;
+        currentY += (targetY - currentY) * 0.08;
+        currentScale += (targetScale - currentScale) * 0.1;
+
+        if (cursorBlob) {
+            cursorBlob.style.transform = `translate(${currentX - 125}px, ${currentY - 125}px) scale(${currentScale})`;
+        }
+
+        // Background blobs react subtly to mouse position for extra depth
+        bgBlobs.forEach((blob, i) => {
+            const shiftX = (mouseX - window.innerWidth / 2) * (0.01 * (i + 1));
+            const shiftY = (mouseY - window.innerHeight / 2) * (0.01 * (i + 1));
+            // Use independent translate property to avoid conflicting with CSS animations
+            blob.style.translate = `${shiftX}px ${shiftY}px`;
+        });
+
+        requestAnimationFrame(smoothMove);
+    };
+    smoothMove();
 
     const authBtn = document.getElementById('auth-btn');
     if (authBtn) {

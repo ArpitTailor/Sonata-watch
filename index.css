@@ -98,7 +98,7 @@ body {
 
 .blob {
     position: absolute;
-    background: #0a401a;
+    background: #1a1400; /* Deep amber shadow for liquid background */
     border-radius: 50%;
     opacity: 0.7;
     filter: blur(30px);
@@ -117,7 +117,7 @@ body {
     height: 400px;
     right: -50px;
     bottom: -50px;
-    background: #1a5c2e;
+    background: #8c6d1f; /* Muted gold for depth */
     animation: liquidMove 25s infinite alternate-reverse;
 }
 
@@ -127,7 +127,7 @@ body {
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
-    background: #062b12;
+    background: #3d2b00; /* Dark gold/bronze for liquid background */
     animation: liquidMove 15s infinite ease-in-out;
 }
 
@@ -155,7 +155,7 @@ body {
 .cursor-blob {
     width: 250px;
     height: 250px;
-    background: #1a5c2e;
+    background: #d4af37; /* Primary golden theme color for the interactive cursor */
     position: fixed;
     top: 0;
     left: 0;
@@ -308,8 +308,8 @@ h2 {
 }
 
 .Sub:hover img {
-    box-shadow: 0 10px 25px rgba(46, 204, 113, 0.4); /* Subtle green reflection */
-    border-color: #2ecc71; /* Change border to green on hover */
+    box-shadow: 0 10px 25px rgba(212, 175, 55, 0.4); /* Subtle gold reflection */
+    border-color: #d4af37; /* Change border to gold on hover */
 }
 
 .Sub:hover button {
@@ -319,9 +319,9 @@ h2 {
 }
 
 .add-to-cart-btn.added {
-    background-color: #2ecc71 !important;
-    color: white !important;
-    border-color: #27ae60 !important;
+    background-color: #ffffff !important;
+    color: #000000 !important;
+    border-color: #d4af37 !important;
 }
 
 /* Footer Styles */

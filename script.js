@@ -252,14 +252,20 @@ function setupParallax() {
         if (!ticking) {
             window.requestAnimationFrame(() => {
                 const scrollValue = window.scrollY;
-                // Multi-layered parallax: elements move at different "parallel" speeds
-                bannerImg.style.transform = `translateY(${scrollValue * 0.2}px) scale(${1 + scrollValue * 0.0001})`;
-                bannerTitle.style.transform = `translateY(${scrollValue * -0.12}px) skewX(${scrollValue * 0.01}deg)`;
+                
+                // Multi-layered parallax using translate3d for GPU acceleration
+                // Banner image scales slightly and moves slower than the scroll
+                bannerImg.style.transform = `translate3d(0, ${scrollValue * 0.25}px, 0) scale(${1 + scrollValue * 0.00015})`;
+                
+                // Title skews slightly and fades out progressively as it moves upward
+                const titleOpacity = Math.max(0, 1 - scrollValue / 500);
+                bannerTitle.style.transform = `translate3d(0, ${scrollValue * -0.15}px, 0) skewX(${scrollValue * 0.02}deg)`;
+                bannerTitle.style.opacity = titleOpacity;
 
-                // Apply varied parallax speeds to the background liquid blobs for enhanced depth
-                if (blobs[0]) blobs[0].style.top = `${-100 + scrollValue * 0.3}px`;
-                if (blobs[1]) blobs[1].style.bottom = `${-50 + scrollValue * 0.2}px`;
-                if (blobs[2]) blobs[2].style.top = `calc(50% + ${scrollValue * -0.15}px)`;
+                // Subtle parallax for background blobs to enhance the "liquid" depth
+                if (blobs[0]) blobs[0].style.translate = `0 ${scrollValue * 0.1}px`;
+                if (blobs[1]) blobs[1].style.translate = `0 ${scrollValue * -0.05}px`;
+                
                 ticking = false;
             });
             ticking = true;

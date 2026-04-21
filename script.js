@@ -486,7 +486,6 @@ async function loadProducts() {
         container.innerHTML = ''; // Clear any existing static content
         products.forEach((p, index) => {
             // Using template literals and proper event listener assignment
-            // It's generally better to use addEventListener instead of onclick in HTML
             const productCard = document.createElement('div');
             productCard.classList.add('card', 'Sub', 'reveal'); // Added reveal class
             // Apply staggered transition delay
@@ -500,6 +499,9 @@ async function loadProducts() {
                 <br><br>
             `;
             container.appendChild(productCard);
+            
+            // Use a small timeout to ensure the browser registers the element before starting the reveal
+            setTimeout(() => productCard.classList.add('active'), 50);
         });
 
         document.querySelectorAll('.add-to-cart-btn').forEach(button => {

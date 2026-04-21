@@ -152,6 +152,28 @@ body {
     100% { transform: translate(5vw, -5vh) rotate(360deg) scale(1.1); }
 }
 
+/* Levitation effect for the hero section */
+@keyframes levitate {
+    0% { transform: translateY(0); filter: drop-shadow(0 5px 15px rgba(212, 175, 55, 0.2)); }
+    50% { transform: translateY(-20px); filter: drop-shadow(0 25px 25px rgba(212, 175, 55, 0.4)); }
+    100% { transform: translateY(0); filter: drop-shadow(0 5px 15px rgba(212, 175, 55, 0.2)); }
+}
+
+/* Animated Underline for Headers */
+h2.reveal::after {
+    content: '';
+    display: block;
+    width: 0;
+    height: 3px;
+    background: #d4af37;
+    margin: 15px auto;
+    transition: width 1s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+h2.reveal.active::after {
+    width: 120px;
+}
+
 .cursor-blob {
     width: 250px;
     height: 250px;
@@ -207,6 +229,7 @@ h1 {
     height: 500px;
     border: 2px solid #000000;
     border-radius: 50px;
+    animation: levitate 5s ease-in-out infinite;
     will-change: transform;
 }
 
@@ -515,13 +538,13 @@ footer {
     border-radius: 20px;
     width: 400px;
     position: relative;
-    transform: translateY(-50px);
-    transition: transform 0.3s ease;
+    transform: scale(0.8) translateY(-50px);
+    transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s ease;
     box-shadow: 0 15px 35px rgba(0,0,0,0.2);
 }
 
 .modal-overlay.active .modal-content {
-    transform: translateY(0);
+    transform: scale(1) translateY(0);
 }
 
 .close-btn {

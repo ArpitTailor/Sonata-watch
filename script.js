@@ -252,6 +252,12 @@ function setupParallax() {
         if (!ticking) {
             window.requestAnimationFrame(() => {
                 const scrollValue = window.scrollY;
+
+                // Update scroll progress bar
+                const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+                const scrolled = (scrollValue / height) * 100;
+                const progress = document.getElementById("scroll-progress");
+                if (progress) progress.style.width = scrolled + "%";
                 
                 // Multi-layered parallax using translate3d for GPU acceleration
                 // Banner image scales slightly and moves slower than the scroll
@@ -278,6 +284,13 @@ function updateCartDisplay() {
     if (cartCountElement) {
         const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
         cartCountElement.innerText = totalItems;
+
+        const cartBtn = document.getElementById("cart-btn");
+        if (cartBtn) {
+            cartBtn.classList.remove('cart-bounce');
+            void cartBtn.offsetWidth; // Trigger reflow to restart animation
+            cartBtn.classList.add('cart-bounce');
+        }
     } else {
         console.warn("Cart count element not found! Make sure an element with id 'cart-count' exists.");
     }
@@ -462,9 +475,6 @@ function addCart(event, productData = null) {
         // Play success sound
         cartSuccessSound.currentTime = 0; // Reset to start for rapid clicks
         cartSuccessSound.play().catch(() => { /* Autoplay block catch */ });
-
-        cartBtn.style.transform = 'scale(1.5)';
-        setTimeout(() => cartBtn.style.transform = 'scale(1)', 200);
     }, { once: true });
 }
 

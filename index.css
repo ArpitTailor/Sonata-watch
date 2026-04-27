@@ -595,12 +595,13 @@ footer {
     width: 400px;
     position: relative;
     transform: scale(0.8) translateY(-50px);
-    transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s ease;
+    transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s ease, box-shadow 0.5s ease;
     box-shadow: 0 15px 35px rgba(0,0,0,0.2);
 }
 
 .modal-overlay.active .modal-content {
     transform: scale(1) translateY(0);
+    box-shadow: 0 25px 50px rgba(0,0,0,0.3); /* Enhanced shadow when active */
 }
 
 .close-btn {
@@ -633,6 +634,13 @@ footer {
     border: 1px solid #ddd;
     border-radius: 8px;
     box-sizing: border-box;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.input-group input:focus {
+    border-color: #d4af37; /* Golden border on focus */
+    box-shadow: 0 0 8px rgba(212, 175, 55, 0.3); /* Subtle golden glow on focus */
+    outline: none; /* Remove default outline */
 }
 
 .submit-btn {
@@ -645,12 +653,13 @@ footer {
     font-size: 18px;
     font-weight: bold;
     cursor: pointer;
-    transition: background-color 0.3s;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .submit-btn:hover {
     background-color: dodgerblue;
     color: white;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Added subtle shadow on hover */
 }
 
 /* Password Toggle Styles */
@@ -724,7 +733,7 @@ footer {
 
 .social-btn:hover {
     transform: translateY(-2px); /* Subtle lift */
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1); /* Subtle shadow */
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15); /* Enhanced shadow */
 }
 
 .google-btn:hover { background: #f8f9fa; border-color: #bbb; }

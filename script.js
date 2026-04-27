@@ -564,16 +564,31 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentX = mouseX;
     let currentY = mouseY;
     let currentScale = 1;
+    let isMouseDown = false;
 
     window.addEventListener('mousemove', (e) => {
         mouseX = e.clientX;
         mouseY = e.clientY;
     });
 
+    window.addEventListener('mousedown', () => {
+        isMouseDown = true;
+        if (cursorBlob) {
+            // Trigger the pulse/ripple animation
+            cursorBlob.classList.remove('pulse');
+            void cursorBlob.offsetWidth; // Trigger reflow
+            cursorBlob.classList.add('pulse');
+        }
+    });
+
+    window.addEventListener('mouseup', () => {
+        isMouseDown = false;
+    });
+
     const smoothMove = () => {
         let targetX = mouseX;
         let targetY = mouseY;
-        let targetScale = 1;
+        let targetScale = isMouseDown ? 1.4 : 1; // Grow on click
 
         // Magnetic attraction logic for interactive elements
         const magnetics = document.querySelectorAll('.add-to-cart-btn, .cart-btn, .auth-btn');
@@ -605,8 +620,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Background blobs react subtly to mouse position for extra depth
         bgBlobs.forEach((blob, i) => {
-            const shiftX = (mouseX - window.innerWidth / 2) * (0.01 * (i + 1));
-            const shiftY = (mouseY - window.innerHeight / 2) * (0.01 * (i + 1));
+            // Multiply the shift effect when mouse is down for a "splash" feel
+            const intensity = isMouseDown ? 0.04 : 0.01;
+            const shiftX = (mouseX - window.innerWidth / 2) * (intensity * (i + 1));
+            const shiftY = (mouseY - window.innerHeight / 2) * (intensity * (i + 1));
             // Use independent translate property to avoid conflicting with CSS animations
             blob.style.translate = `${shiftX}px ${shiftY}px`;
         });

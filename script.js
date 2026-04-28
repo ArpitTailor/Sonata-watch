@@ -620,11 +620,18 @@ document.addEventListener('DOMContentLoaded', () => {
         const speed = Math.sqrt(vx * vx + vy * vy);
 
         // Linear interpolation (lerp) for smooth trailing effect
-        currentX += ta
+        currentX += (targetX - currentX) * 0.15;
+        currentY += (targetY - currentY) * 0.15;
+        currentScale += (targetScale - currentScale) * 0.15;
+
+        if (cursorBlob) {
+            const rotation = Math.atan2(vy, vx) * (180 / Math.PI);
+            const stretch = 1 + speed / 1000;
             cursorBlob.style.transform = `translate(${currentX - 125}px, ${currentY - 125}px) rotate(${rotation}deg) scale(${currentScale * stretch}, ${currentScale / stretch})`;
         }
         // Background blobs react subtly to mouse position for extra depth
-        bgBl// Multipl
+        bgBlobs.forEach((blob, i) => {
+            // Multiply the shift effect when mouse is down for a "splash" feel
             const intensity = isMouseDown ? 0.04 : 0.01;
             const shiftX = (mouseX - window.innerWidth / 2) * (intensity * (i + 1));
             const shiftY = (mouseY - window.innerHeight / 2) * (intensity * (i + 1));
@@ -633,7 +640,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         requestAnimationFrame(smoothMove);
-    };
+    } 
     smoothMove();
 
     const authBtn = document.getElementById('auth-btn');

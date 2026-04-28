@@ -686,6 +686,18 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // Modal close and cancellation buttons
+    document.querySelectorAll('.close-btn, .cancel-action').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.preventDefault();
+            const modal = btn.closest('.modal-overlay');
+            if (modal.id === 'login-modal') closeLoginModal();
+            else if (modal.id === 'recovery-modal') closeRecoveryModal();
+            else if (modal.id === 'cart-modal') closeCartModal();
+            else if (modal.id === 'checkout-modal') closeCheckoutModal();
+        });
+    });
+
     // Handle Social Login Buttons
     document.querySelectorAll('.social-btn').forEach(btn => {
         btn.addEventListener('click', handleSocialLogin);

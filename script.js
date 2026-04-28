@@ -285,6 +285,11 @@ function updateCartDisplay() {
         const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
         cartCountElement.innerText = totalItems;
 
+        // Add pulse animation if items > 0
+        if (totalItems > 0) {
+            cartCountElement.style.animation = 'badgePulse 2s infinite';
+        }
+
         const cartBtn = document.getElementById("cart-btn");
         if (cartBtn) {
             cartBtn.classList.remove('cart-bounce');
@@ -609,18 +614,17 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
+        // Calculate velocity for squash and stretch
+        const vx = targetX - currentX;
+        const vy = targetY - currentY;
+        const speed = Math.sqrt(vx * vx + vy * vy);
+
         // Linear interpolation (lerp) for smooth trailing effect
-        currentX += (targetX - currentX) * 0.08;
-        currentY += (targetY - currentY) * 0.08;
-        currentScale += (targetScale - currentScale) * 0.1;
-
-        if (cursorBlob) {
-            cursorBlob.style.transform = `translate(${currentX - 125}px, ${currentY - 125}px) scale(${currentScale})`;
+        currentX += ta
+            cursorBlob.style.transform = `translate(${currentX - 125}px, ${currentY - 125}px) rotate(${rotation}deg) scale(${currentScale * stretch}, ${currentScale / stretch})`;
         }
-
         // Background blobs react subtly to mouse position for extra depth
-        bgBlobs.forEach((blob, i) => {
-            // Multiply the shift effect when mouse is down for a "splash" feel
+        bgBl// Multipl
             const intensity = isMouseDown ? 0.04 : 0.01;
             const shiftX = (mouseX - window.innerWidth / 2) * (intensity * (i + 1));
             const shiftY = (mouseY - window.innerHeight / 2) * (intensity * (i + 1));

@@ -261,11 +261,11 @@ function setupParallax() {
                 
                 // Multi-layered parallax using translate3d for GPU acceleration
                 // Banner image scales slightly and moves slower than the scroll
-                bannerImg.style.transform = `translate3d(0, ${scrollValue * 0.25}px, 0) scale(${1 + scrollValue * 0.00015})`;
+                bannerImg.style.transform = `translate3d(0, ${scrollValue * 0.35}px, 0) scale(${1 + scrollValue * 0.00025})`;
                 
                 // Title skews slightly and fades out progressively as it moves upward
                 const titleOpacity = Math.max(0, 1 - scrollValue / 500);
-                bannerTitle.style.transform = `translate3d(0, ${scrollValue * -0.15}px, 0) skewX(${scrollValue * 0.02}deg)`;
+                bannerTitle.style.transform = `translate3d(0, ${scrollValue * -0.15}px, 0) skewX(${scrollValue * 0.01}deg)`;
                 bannerTitle.style.opacity = titleOpacity;
 
                 // Subtle parallax for background blobs to enhance the "liquid" depth

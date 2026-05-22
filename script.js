@@ -261,15 +261,15 @@ function setupParallax() {
                 
                 // Multi-layered parallax using translate3d for GPU acceleration
                 // Banner image scales slightly and moves slower than the scroll
-                bannerImg.style.transform = `translate3d(0, ${scrollValue * 0.35}px, 0) scale(${1 + scrollValue * 0.00025})`;
+                bannerImg.style.transform = `translate3d(${scrollValue * -0.1}px, ${scrollValue * 0.35}px, 0) scale(${1 + scrollValue * 0.00025})`;
                 
-                // Title skews slightly and fades out progressively as it moves upward
+                // Title moves horizontally (Parallel X) and skews
                 const titleOpacity = Math.max(0, 1 - scrollValue / 500);
-                bannerTitle.style.transform = `translate3d(0, ${scrollValue * -0.15}px, 0) skewX(${scrollValue * 0.01}deg)`;
+                bannerTitle.style.transform = `translate3d(${scrollValue * 0.5}px, ${scrollValue * -0.15}px, 0) skewX(${scrollValue * 0.01}deg)`;
                 bannerTitle.style.opacity = titleOpacity;
 
                 // Subtle parallax for background blobs to enhance the "liquid" depth
-                if (blobs[0]) blobs[0].style.translate = `0 ${scrollValue * 0.1}px`;
+                if (blobs[0]) blobs[0].style.translate = `${scrollValue * 0.2}px ${scrollValue * 0.1}px`;
                 if (blobs[1]) blobs[1].style.translate = `0 ${scrollValue * -0.05}px`;
                 
                 ticking = false;
@@ -633,8 +633,10 @@ document.addEventListener('DOMContentLoaded', () => {
         bgBlobs.forEach((blob, i) => {
             // Multiply the shift effect when mouse is down for a "splash" feel
             const intensity = isMouseDown ? 0.04 : 0.01;
-            const shiftX = (mouseX - window.innerWidth / 2) * (intensity * (i + 1));
-            const shiftY = (mouseY - window.innerHeight / 2) * (intensity * (i + 1));
+            // Add a tiny random jitter to simulate bubbling liquid
+            const bubbleJitter = Math.sin(Date.now() * 0.001 + i) * 5;
+            const shiftX = (mouseX - window.innerWidth / 2) * (intensity * (i + 1)) + bubbleJitter;
+            const shiftY = (mouseY - window.innerHeight / 2) * (intensity * (i + 1)) + bubbleJitter;
             // Use independent translate property to avoid conflicting with CSS animations
             blob.style.translate = `${shiftX}px ${shiftY}px`;
         });

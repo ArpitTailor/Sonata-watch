@@ -3,6 +3,11 @@ let cart = [];
 let isLoggedIn = false;
 const cartSuccessSound = new Audio('https://assets.mixkit.co/active_storage/sfx/2869/2869-preview.mp3');
 
+let magnetics = [];
+function refreshMagnetics() {
+    magnetics = document.querySelectorAll('.add-to-cart-btn, .cart-btn, .auth-btn, .search-bar');
+}
+
 // Authentication Logic
 let socialUserName = "";
 function updateAuthButton() {
@@ -470,6 +475,7 @@ function addCart(event, productData = null) {
         flyingImg.style.top = `${cartRect.top}px`;
         flyingImg.style.width = '30px';
         flyingImg.style.height = '30px';
+        flyingImg.style.height = '30px';
         flyingImg.style.opacity = '0.4';
     }, 10);
 
@@ -531,6 +537,7 @@ async function loadProducts() {
 
         // Re-run scroll reveal for dynamic elements
         handleScrollReveal();
+        refreshMagnetics();
 
     } catch (error) {
         console.error("Error loading products:", error);
@@ -596,8 +603,6 @@ document.addEventListener('DOMContentLoaded', () => {
         let targetScale = isMouseDown ? 1.4 : 1; // Grow on click
 
         // Magnetic attraction logic for interactive elements
-        const magnetics = document.querySelectorAll('.add-to-cart-btn, .cart-btn, .auth-btn');
-        
         magnetics.forEach(el => {
             const rect = el.getBoundingClientRect();
             const centerX = rect.left + rect.width / 2;
@@ -607,10 +612,17 @@ document.addEventListener('DOMContentLoaded', () => {
             const distance = Math.sqrt(dx * dx + dy * dy);
 
             // If mouse is within 150px of a button, gravitate the blob center towards it
-            if (distance < 150) {
+            if (distance < 120) {
                 targetX = centerX + (dx * 0.3); // 70% pull toward center
                 targetY = centerY + (dy * 0.3);
                 targetScale = 0.6; // Shrink blob to "focus" on the button
+
+                // Magnetic pull for non-input elements
+                if (el.tagName !== 'INPUT') {
+                    el.style.transform = `translate(${dx * 0.15}px, ${dy * 0.15}px)`;
+                }
+            } else if (el.style.transform !== "" && el.tagName !== 'INPUT') {
+                el.style.transform = "";
             }
         });
 
@@ -645,6 +657,7 @@ document.addEventListener('DOMContentLoaded', () => {
     } 
     smoothMove();
 
+    refreshMagnetics();
     const authBtn = document.getElementById('auth-btn');
     if (authBtn) {
         authBtn.addEventListener('click', handleAuth);

@@ -276,6 +276,13 @@ h1 {
     color: #d4af37; /* Golden color */
     font-size: 125px;
     will-change: transform, opacity;
+    transition: text-shadow 0.6s ease, transform 0.6s ease, letter-spacing 0.6s ease;
+}
+
+.Top h1:hover {
+    text-shadow: 0 0 30px rgba(212, 175, 55, 0.8);
+    letter-spacing: 5px;
+    transform: scale(1.02);
 }
 
 .Top img {
@@ -442,7 +449,20 @@ footer {
 .footer-section {
     flex: 1;
     min-width: 200px;
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1), 
+                transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
 }
+
+footer.active .footer-section {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+footer.active .footer-section:nth-child(1) { transition-delay: 0.2s; }
+footer.active .footer-section:nth-child(2) { transition-delay: 0.4s; }
+footer.active .footer-section:nth-child(3) { transition-delay: 0.6s; }
 
 .footer-section h3, .footer-section h4 {
     color: #d4af37;
@@ -591,6 +611,15 @@ footer {
     border-color: #d4af37; /* Golden border on focus */
     box-shadow: 0 0 10px rgba(212, 175, 55, 0.5); /* Golden glow on focus */
     width: 250px; /* Expand on focus */
+}
+
+@keyframes searchPulse {
+    0%, 100% { box-shadow: 0 0 10px rgba(212, 175, 55, 0.4); }
+    50% { box-shadow: 0 0 20px rgba(212, 175, 55, 0.7), 0 0 30px rgba(212, 175, 55, 0.2); }
+}
+
+.search-bar:focus {
+    animation: searchPulse 2s infinite;
 }
 
 /* Modal Overlay */
